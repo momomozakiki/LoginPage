@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+        <style>
+        .input_password {
+            position: relative;
+        }
+        #eyeicon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>My First App</h1>
+</header>
+<main>
+    <img src="../src/images/logo.png" alt="alt_img">
+    <form action="/login" method="post">
+        <!-- form elements -->
+        <!-- Username and Password Fields -->
+        <div class="user_id_psw">
+            <div class="input_username">
+                <input type="text" name="username" placeholder="Username">
+            </div>
+            <div class="input_password">
+                <input type="password" name="password" placeholder="Password" id="password">
+                <img src="../src/images/eye_close.png" title="Show password" id="eyeicon">
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="summit_btn">
+            <button type="submit" class="login_btn">Login</button>
+        </div>
+    </form>
+
+    <!-- Authentication Links -->
+    <div class="auth_links">
+        <a href="/signup" aria-label="Go to Sign Up page">Sign Up</a>
+        <a href="/forgot_password" aria-label="Go to Forgot Password page">Forgot Password?</a>
+    </div>
+</main>
+
+<script>
+function togglePassword(passwordField, icon) {
+    if(passwordField.type === "password") {
+        passwordField.type = "text";            // Show the password
+        icon.src = "../src/images/eye_open.png";
+        icon.alt = "Hide password";
+        icon.title = "Hide password";           // When the password is visible
+    } else {
+        passwordField.type = "password";        // Hide the password
+        icon.src = "../src/images/eye_close.png";
+        icon.alt = "Show password";
+        icon.title = "Show password";           // Initially
+    }
+}
+
+let eyeicon = document.getElementById("eyeicon");
+let password = document.getElementById("password");
+
+eyeicon.onclick = function() {
+    togglePassword(password, eyeicon);
+}
+
+
+</script>
+</body>
+</html>
