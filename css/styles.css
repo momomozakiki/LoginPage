@@ -1,0 +1,30 @@
+* {
+    text-align: center;
+    color : blue;
+}
+
+header {
+
+}
+
+main {
+
+}
+
+
+
+
+
+
+
+
+.input_password {
+    position: relative;
+}
+#eyeicon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
