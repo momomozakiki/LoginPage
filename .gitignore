@@ -1,0 +1,33 @@
+# Ignore compiled CSS and source maps
+*.css
+*.css.map
+/public/css/
+
+# Ignore SCSS temporary/cache files
+*.sass-cache/
+*.scssc
+
+# Ignore build output
+/dist/
+/build/
+
+# Ignore dependencies
+node_modules/
+
+# Ignore environment files
+.env
+.env.local
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+
+# Editor/IDE files
+.idea/
+.vscode/
+*.iml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
