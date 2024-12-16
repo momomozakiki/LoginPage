@@ -3,25 +3,39 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:css": "sass src/css/styles.scss dist/css/styles.css",
-    "prefix:css": "postcss dist/css/styles.css --use autoprefixer -o dist/css/styles.css",
-    "minify:css": "postcss dist/css/styles.css --use cssnano -o dist/css/styles.min.css",
-    "build": "npm run build:css && npm run prefix:css && npm run minify:css",
-    "watch:css": "sass --watch src/css/styles.scss:dist/css/styles.css",
-    "start": "npm run build && npm run watch:css"
+    "build:css": "sass src/scss/styles.scss src/css/styles.css",
+    "prefix:css": "postcss src/css/styles.css --use autoprefixer -o src/css/styles.css",
+    "minify:css": "postcss src/css/styles.css --use cssnano -o dist/css/styles.min.css",
+    "build": "npm run build:css && npm run prefix:css && npm run minify:css && npm run build:js",
+    "watch:css": "sass --watch src/scss/styles.scss:src/css/styles.css",
+    "start": "npm run build && npm run watch:css",
+    "build:js": "webpack --mode production",
+    "dev:js": "webpack --mode development",
+    "watch:js": "webpack --mode development --watch",
+    "lint:js": "eslint src/**/*.js --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@eslint/config-array": "^0.19.1",
+    "@eslint/object-schema": "^2.1.5",
     "bootstrap": "^5.3.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "autoprefixer": "^10.4.20",
+    "babel-loader": "^9.2.1",
     "cssnano": "^7.0.6",
+    "eslint": "^7.32.0",
     "postcss": "^8.4.49",
     "postcss-cli": "^11.0.0",
-    "sass": "^1.83.0"
+    "sass": "^1.83.0",
+    "terser-webpack-plugin": "^5.3.11",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.0"
   },
   "repository": {
     "type": "git",

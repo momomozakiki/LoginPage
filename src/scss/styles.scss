@@ -1,1 +1,44 @@
-@import "node_modules/bootstrap/scss/bootstrap";
+
+
+// src/scss/styles.scss
+
+// Variables
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+
+// Mixins
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+// Body Styling
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+// Header Styling
+header {
+  background-color: $primary-color;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  @include border-radius(10px);
+}
+
+// Button Styling
+button {
+  background-color: $secondary-color;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
+}
