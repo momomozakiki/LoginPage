@@ -1,0 +1,16 @@
+# Automatically normalize line endings
+* text=auto
+
+# Force LF line endings for specific file types
+*.js text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+
+# Force CRLF line endings for Windows batch files
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Treat certain files as binary (they won't be modified)
+*.png binary
+*.jpg binary
