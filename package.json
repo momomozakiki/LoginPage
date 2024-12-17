@@ -6,14 +6,15 @@
     "build:css": "sass src/scss/styles.scss src/css/styles.css",
     "prefix:css": "postcss src/css/styles.css --use autoprefixer -o src/css/styles.css",
     "minify:css": "postcss src/css/styles.css --use cssnano -o dist/css/styles.min.css",
-    "build": "npm run build:css && npm run prefix:css && npm run minify:css && npm run build:js",
-    "watch:css": "sass --watch src/scss/styles.scss:src/css/styles.css",
-    "start": "npm run build && npm run watch:css",
     "build:js": "webpack --mode production",
     "dev:js": "webpack --mode development",
     "watch:js": "webpack --mode development --watch",
-    "lint:js": "eslint src/**/*.js --fix"
-  },
+    "watch:css": "sass --watch src/scss/styles.scss:src/css/styles.css",
+    "lint:js": "eslint src/**/*.js --fix",
+    "build": "npm run build:css && npm run prefix:css && npm run minify:css && npm run build:js",
+    "start": "npm run build && npm run watch:css && npm run watch:js"
+  }
+  ,
   "keywords": [],
   "author": "",
   "license": "ISC",
