@@ -1,5 +1,6 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/js/index.js',  // Adjust the entry point to your main JS file
@@ -33,4 +34,17 @@ module.exports = {
     port: 9000,  // You can change the port to any other port you prefer
     open: true,  // Automatically open the browser when the dev server starts
   },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html', // Source HTML
+      filename: '../index.html',    // Output HTML in the root of dist
+      minify: {
+        removeComments: true,       // Remove HTML comments
+        collapseWhitespace: true,   // Remove extra whitespace
+        minifyJS: true,             // Minify inline JavaScript
+        minifyCSS: true,            // Minify inline CSS
+      },
+    }),
+  ],
 };
