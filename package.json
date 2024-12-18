@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:css": "sass src/scss/styles.scss src/css/styles.css",
+    "build:css": "sass --load-path=node_modules src/scss/styles.scss src/css/styles.css",
     "prefix:css": "postcss src/css/styles.css --use autoprefixer -o src/css/styles.css",
     "minify:css": "postcss src/css/styles.css --use cssnano -o dist/css/styles.min.css",
     "build:js": "webpack --mode production",
@@ -13,8 +13,7 @@
     "lint:js": "eslint src/**/*.js --fix",
     "build": "npm run build:css && npm run prefix:css && npm run minify:css && npm run build:js",
     "start": "npm run build && npm run watch:css && npm run watch:js"
-  }
-  ,
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
