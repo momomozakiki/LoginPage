@@ -3,9 +3,12 @@ To create a login page template for future use
 
 ## Description 
 I want to create a general login page template with correct programming practice,
-in this project i will use html, scss, npm, node js, git, github to develope and maintain the code,
-beside that i also try to using npm generated package.json to create script to automate my 
+in this project i will use html, scss, npm, Nodejs, git, GitHub to developed and maintain the code,
+besides that I also try to use npm generated package.json to create script to automate my 
 package dependencies' installation, version checking and update the package if needed
+
+Still learning what is the correct work flow to ensure i am able to deploy the 
+development environment at different system without any problem
 
 ## Installation 
 1. to clone from repository
@@ -19,6 +22,8 @@ package dependencies' installation, version checking and update the package if n
 
 4. Starts the development server.
 > npm run start
+
+5. ddd
 
 
 
@@ -44,8 +49,8 @@ package dependencies' installation, version checking and update the package if n
 | npm install          | Installs all dependencies               | TBA  |
 | npm run build        | Runs the build process                  | TBA  |
 | npm run start        | Starts the development server           | TBA  |
-|                      |                                         |      |
-|                      |                                         |      |
+|                      |                                         | TBA  |
+|                      |                                         | TBA  |
 
 
 ## Refresh used of command
