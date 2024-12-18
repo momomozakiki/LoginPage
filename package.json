@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:css": "sass --load-path=node_modules src/scss/styles.scss src/css/styles.css",
+    "build:css": "sass --load-path=node_modules src/scss/styles.scss src/css/styles.css && sass --load-path=node_modules src/scss/styles.scss dist/css/styles.css",
     "prefix:css": "postcss src/css/styles.css --use autoprefixer -o src/css/styles.css",
     "minify:css": "postcss src/css/styles.css --use cssnano -o dist/css/styles.min.css",
     "build:js": "webpack --mode production",
