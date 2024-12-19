@@ -29,28 +29,30 @@ development environment at different system without any problem
 
 ## Common use command
 ### Git Command
-| Git Command                                    | Description                             | TBA  |
-|------------------------------------------------|-----------------------------------------|------|
-| git pull origin main                           | pull updates from remote repository url | TBA  |
-| git branch                                     | check the current branch                | TBA  |
-| git branch -a                                  | check all the local and remote branch   | TBA  |
-| git branch -r                                  | check all remote branch                 | TBA  |
-|                                                |                                         | TBA  |
-| git remote -v                                  | show the current origin remote url      | TBA  |
-| git remote set-url origin <new-repository-url> | change to new repository url            | TBA  |
-|                                                |                                         | TBA  |
-|                                                |                                         | TBA  |
-| git add <file>                                 | add only the specific file              | TBA  |
-| git add .                                      | add all the modified file               | TBA  |
+| Git Command                                    | Description                                               | TBA  |
+|------------------------------------------------|-----------------------------------------------------------|------|
+| git pull origin main                           | pull updates from remote repository url                   | TBA  |
+| git branch                                     | check the current branch                                  | TBA  |
+| git branch -a                                  | check all the local and remote branch                     | TBA  |
+| git branch -r                                  | check all remote branch                                   | TBA  |
+|                                                |                                                           | TBA  |
+| git remote -v                                  | show the current origin remote url                        | TBA  |
+| git remote set-url origin <new-repository-url> | change to new repository url                              | TBA  |
+|                                                |                                                           | TBA  |
+| git status                                     | check any changes of current branch                       | TBA  |
+| git add <file>                                 | add only the specific file                                | TBA  |
+| git add .                                      | add all the modified file                                 | TBA  |
+| git commit -m "Comment"                        | commit the changes to the current branch                  | TBA  |
+| git push origin ***main***                     | push the current branch (***main***) to remote repository | TBA  |
 
 ### Npm Command
-| Npm Command          | Description                             | TBA  |
-|----------------------|-----------------------------------------|------|
-| npm install          | Installs all dependencies               | TBA  |
-| npm run build        | Runs the build process                  | TBA  |
-| npm run start        | Starts the development server           | TBA  |
-|                      |                                         | TBA  |
-|                      |                                         | TBA  |
+| Npm Command   | Description                                             | TBA  |
+|---------------|---------------------------------------------------------|------|
+| npm install   | Installs all dependencies                               | TBA  |
+| npm run build | Runs the build process                                  | TBA  |
+| npm run start | Starts the development server                           | TBA  |
+| npm outdated  | check all the dependencies is the latest version or not | TBA  |
+|               |                                                         | TBA  |
 
 
 ## Refresh used of command
