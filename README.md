@@ -17,6 +17,21 @@ development environment at different system without any problem
 2. Installs all dependencies.
 > npm install
 
+```
+"scripts": {
+  "build:css": "webpack --mode production",  // Webpack handles SCSS to CSS, prefixing, and minification
+  "dev:css": "webpack --mode development",   // Webpack for SCSS in development mode
+  "build:js": "webpack --mode production",   // JavaScript bundling for production
+  "dev:js": "webpack --mode development",    // JavaScript bundling for development
+  "watch": "webpack --watch",                // Watch files for changes (SCSS and JS)
+  "lint:js": "eslint src/**/*.js --fix",     // Lint and fix JavaScript files
+  "check:outdated": "npm outdated",          // Check outdated dependencies
+  "build": "npm run build:css && npm run build:js",  // Combined build for CSS and JS
+  "start": "webpack serve --open",           // Start the development server with Webpack
+  "postinstall": "npm run build"             // Build after dependencies are installed
+},
+```
+
 3. Runs the build process.
 > npm run build
 
@@ -52,17 +67,19 @@ development environment at different system without any problem
 | git push origin ***main***                     | push the current branch (***main***) to remote repository                    | TBA  |
 
 ### Npm Command
-| Npm Command                           | Description                                                                  | TBA  |
-|---------------------------------------|------------------------------------------------------------------------------|------|
-| npm init                              | Run npm init or npm init -y to Create package.json                           | TBA  |
-| npm init -y                           | it will create a package.json with default values.                           | TBA  |
-| npm install                           | Installs all dependencies                                                    | TBA  |
-| npm install <package-name> --save-dev | install (package-name) and save the package in the package.json dependencies | TBA  |
-| npm run build                         | Runs the build process                                                       | TBA  |
-| npm run start                         | Starts the development server                                                | TBA  |
-| npm outdated                          | check all the dependencies is the latest version or not                      | TBA  |
-|                                       |                                                                              | TBA  |
-|                                       |                                                                              | TBA  |
+| Npm Command                                  | Description                                                                                          | TBA  |
+|----------------------------------------------|------------------------------------------------------------------------------------------------------|------|
+| npm init                                     | Run npm init or npm init -y to Create package.json                                                   | TBA  |
+| npm init -y                                  | it will create a package.json with default values.                                                   | TBA  |
+| npm install                                  | Installs all dependencies                                                                            | TBA  |
+| npm install <package-name> --save-dev        | install (package-name) and save the package in the package.json dependencies                         | TBA  |
+| npm run build                                | Runs the build process                                                                               | TBA  |
+| npm run start                                | Starts the development server                                                                        | TBA  |
+| npm outdated                                 | check all the dependencies is the latest version or not                                              | TBA  |
+| npm update                                   | To update all dependencies to the latest versions                                                    | TBA  |
+| npm install <package-name>@latest            | To update a specific dependency to its latest version                                                | TBA  |
+| npm install <package-name>@latest --save-dev | To update a specific dependency to its latest version and save save at the package.json dependencies | TBA  |
+|                                              |                                                                                                      | TBA  |
 
 
 ## Refresh used of command

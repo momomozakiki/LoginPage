@@ -1,49 +1,87 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: './src/js/index.js',  // Adjust the entry point to your main JS file
+  // Entry point for the application
+  entry: './src/js/index.js', // Main JS file for Webpack to bundle
+
+  // Output configuration
   output: {
-    path: path.resolve(__dirname, 'dist/js'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'), // Output directory for bundled files
+    filename: 'js/bundle.js', // Name of the bundled JavaScript file
+    clean: true, // Cleans the output directory before each build
   },
+
+  // Module rules for processing different file types
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
+        test: /\.js$/, // Matches JavaScript files
+        exclude: /node_modules/, // Exclude files in the node_modules directory
         use: {
-          loader: 'babel-loader',
+          loader: 'babel-loader', // Transpiles ES6+ JavaScript to ES5 for browser compatibility
           options: {
-            presets: ['@babel/preset-env'],
+            presets: ['@babel/preset-env'], // Babel preset for modern JavaScript
           },
         },
       },
+      {
+        test: /\.(scss|css)$/, // Matches SCSS and CSS files
+        use: [
+          MiniCssExtractPlugin.loader, // Extracts CSS into separate files
+          'css-loader', // Resolves CSS imports in JS
+          {
+            loader: 'postcss-loader', // Applies PostCSS plugins like autoprefixer and cssnano
+            options: {
+              postcssOptions: {
+                plugins: [
+                  require('autoprefixer'), // Adds vendor prefixes for CSS compatibility
+                  require('cssnano')({ preset: 'default' }), // Minifies CSS for production
+                ],
+              },
+            },
+          },
+          'sass-loader', // Compiles SCSS into CSS
+        ],
+      },
     ],
   },
+
+  // Optimization settings
   optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin()],
+    minimize: true, // Enables code minification
+    minimizer: [new TerserPlugin()], // Minifies JavaScript files
   },
-  devtool: 'source-map',  // This will generate a source map for easier debugging
 
+  // Source map generation for easier debugging
+  devtool: 'source-map',
+
+  // Development server configuration
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),  // Directory to serve static files from
-    compress: true,  // Enable gzip compression
-    port: 9000,  // You can change the port to any other port you prefer
-    open: true,  // Automatically open the browser when the dev server starts
+    static: path.resolve(__dirname, 'dist'), // Serve static files from the dist folder
+    compress: true, // Enable gzip compression for faster load times
+    port: 9000, // Specify the port to run the server
+    open: true, // Automatically open the browser on server start
   },
 
+  // Plugins for additional functionality
   plugins: [
+    // Plugin to extract CSS into separate files
+    new MiniCssExtractPlugin({
+      filename: 'css/styles.css', // Output CSS file name
+    }),
+
+    // Plugin to handle HTML file generation
     new HtmlWebpackPlugin({
-      template: './src/index.html', // Source HTML
-      filename: '../index.html',    // Output HTML in the root of dist
+      template: './src/index.html', // Template HTML file
+      filename: 'index.html', // Output HTML file
       minify: {
-        removeComments: true,       // Remove HTML comments
-        collapseWhitespace: true,   // Remove extra whitespace
-        minifyJS: true,             // Minify inline JavaScript
-        minifyCSS: true,            // Minify inline CSS
+        removeComments: true, // Remove comments from the HTML
+        collapseWhitespace: true, // Collapse whitespace for a smaller file
+        minifyJS: true, // Minify inline JavaScript
+        minifyCSS: true, // Minify inline CSS
       },
     }),
   ],
