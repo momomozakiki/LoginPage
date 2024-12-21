@@ -1,5 +1,8 @@
 // src/js/index.js
 
+import '../scss/styles.scss';
+
+
 // Simple JavaScript function to change background color on button click
 document.addEventListener("DOMContentLoaded", function() {
   const button = document.querySelector("button");
