@@ -16,6 +16,17 @@ It's particularly useful for optimizing load times (minifying CSS and JS, handli
 */
 import '../scss/styles.scss';
 
+import { togglePassword } from './toggle-password.js';
+
+let eyeicon = document.getElementById("eye-icon");
+let password = document.getElementById("password");
+
+eyeicon.onclick = function() {
+    togglePassword(password, eyeicon);
+};
+
+
+/*
 
 // Simple JavaScript function to change background color on button click
 document.addEventListener("DOMContentLoaded", function() {
@@ -32,3 +43,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 });
+
+*/
