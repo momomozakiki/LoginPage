@@ -37,11 +37,11 @@ development environment at different system without any problem
 | git branch -r                                  | check all remote branch                                                      | TBA  |
 |                                                |                                                                              | TBA  |
 | git diff main                                  | This shows the differences between the current branch and main               | TBA  |
-| git diff main..current-branch                  | This compares changes between main and the current branch in both directions | TBA  |
+| git diff main..<current-branch>                | This compares changes between main and the current branch in both directions | TBA  |
 | git merge main                                 | bring the latest changes from main into the current branch                   | TBA  |
 |                                                |                                                                              | TBA  |
-| git checkout branch                            | checkout to the specific (***branch***)                                      | TBA  |
-| git checkout -b new-branch                     | checkout and create new branch and clone from main branch                    | TBA  |
+| git checkout <branch-name>                     | checkout to the specific (***branch***)                                      | TBA  |
+| git checkout -b <new-branch>                   | checkout and create new branch and clone from main branch                    | TBA  |
 | git remote -v                                  | show the current origin remote url                                           | TBA  |
 | git remote set-url origin <new-repository-url> | change to new repository url                                                 | TBA  |
 |                                                |                                                                              | TBA  |
@@ -52,13 +52,17 @@ development environment at different system without any problem
 | git push origin ***main***                     | push the current branch (***main***) to remote repository                    | TBA  |
 
 ### Npm Command
-| Npm Command   | Description                                             | TBA  |
-|---------------|---------------------------------------------------------|------|
-| npm install   | Installs all dependencies                               | TBA  |
-| npm run build | Runs the build process                                  | TBA  |
-| npm run start | Starts the development server                           | TBA  |
-| npm outdated  | check all the dependencies is the latest version or not | TBA  |
-|               |                                                         | TBA  |
+| Npm Command                           | Description                                                                  | TBA  |
+|---------------------------------------|------------------------------------------------------------------------------|------|
+| npm init                              | Run npm init or npm init -y to Create package.json                           | TBA  |
+| npm init -y                           | it will create a package.json with default values.                           | TBA  |
+| npm install                           | Installs all dependencies                                                    | TBA  |
+| npm install <package-name> --save-dev | install (package-name) and save the package in the package.json dependencies | TBA  |
+| npm run build                         | Runs the build process                                                       | TBA  |
+| npm run start                         | Starts the development server                                                | TBA  |
+| npm outdated                          | check all the dependencies is the latest version or not                      | TBA  |
+|                                       |                                                                              | TBA  |
+|                                       |                                                                              | TBA  |
 
 
 ## Refresh used of command
