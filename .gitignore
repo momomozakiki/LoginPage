@@ -31,3 +31,8 @@ node_modules/
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# ChatGPT assistance
+Backend/ChatGPT/
+
+

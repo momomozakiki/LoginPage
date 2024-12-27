@@ -16,14 +16,24 @@ It's particularly useful for optimizing load times (minifying CSS and JS, handli
 */
 import '../scss/styles.scss';
 
+// Import images from assets to triggers the asset/resource rule, and output files would be hashed
+import eyeClose from '../assets/images/eye_close.png';
+import eyeOpen from '../assets/images/eye_open.png';
+import logo from '../assets/images/logo.png';
+
 import { togglePassword } from './toggle-password.js';
 
-let eyeicon = document.getElementById("eye-icon");
-let password = document.getElementById("password");
+document.addEventListener("DOMContentLoaded", () => {
+    const eyeicon = document.getElementById("eye-icon");
+    const password = document.getElementById("password");
 
-eyeicon.onclick = function() {
-    togglePassword(password, eyeicon);
-};
+    if (eyeicon && password) {
+        eyeicon.onclick = () => togglePassword(password, eyeicon, './assets/images/eye_open.png', './assets/images/eye_close.png');
+    } else {
+        console.warn("Password field or eye icon not found in the DOM.");
+    }
+});
+
 
 
 /*

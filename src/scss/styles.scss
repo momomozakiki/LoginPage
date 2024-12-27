@@ -6,6 +6,25 @@
 $primary-color: #3498db;
 $secondary-color: #2ecc71;
 
+// Mixin for button styles
+@mixin button-styles($bg-color) {
+    background-color: $bg-color;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+// Styles
+.btn {
+    @include button-styles($primary-color);
+    &.btn-secondary {
+        @include button-styles($secondary-color);
+    }
+}
+
+
 // Mixins
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
