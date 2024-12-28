@@ -21,6 +21,12 @@ import eyeClose from '../assets/images/eye_close.png';
 import eyeOpen from '../assets/images/eye_open.png';
 import logo from '../assets/images/logo.png';
 
+const logoElement = document.getElementById('logo');
+logoElement.src = logo;  // Webpack will automatically provide the correct hashed URL
+
+const eyeicon = document.getElementById("eye-icon");
+//logoElement.src = eyeClose;  // Webpack will automatically provide the correct hashed URL during first loading of the page
+
 import { togglePassword } from './toggle-password.js';
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -28,7 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password");
 
     if (eyeicon && password) {
-        eyeicon.onclick = () => togglePassword(password, eyeicon, './assets/images/eye_open.png', './assets/images/eye_close.png');
+        // Set initial image to eyeClose
+        eyeicon.src = eyeClose;  // Set the initial icon to the eyeClose image
+
+         // Toggle between eyeClose and eyeOpen on click
+        eyeicon.onclick = () => togglePassword(password, eyeicon, eyeOpen, eyeClose);
     } else {
         console.warn("Password field or eye icon not found in the DOM.");
     }

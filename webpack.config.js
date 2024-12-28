@@ -129,6 +129,7 @@ module.exports = (env, argv) => {
       // Generate an HTML file (dist/index.html) with automatically injected JS/CSS
       new HtmlWebpackPlugin({
         template: './src/index.html',
+        inject: 'body', // Inject the assets in the body (usually for JS)
         // Minify HTML in production
         minify: isProduction && {
           removeComments: true,
