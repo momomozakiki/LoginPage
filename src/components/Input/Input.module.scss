@@ -1,0 +1,10 @@
+.icon {
+  cursor: pointer;
+  position: absolute;
+  left: 10px; // Move the icon to the left
+  top: 50%;
+  transform: translateY(-50%); // Center the icon vertically
+  height: 100%; // Make the icon height match the input height
+  width: auto; // Maintain the aspect ratio of the icon
+  max-height: 24px; // Optional: Set a maximum height to prevent the icon from being too large
+}

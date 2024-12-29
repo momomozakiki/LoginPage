@@ -1,4 +1,5 @@
 import React from "react";
+import * as styles from './Input.module.scss';
 
 interface InputProps {
   type: string;
@@ -23,13 +24,7 @@ const Input: React.FC<InputProps> = ({
           src={icon}
           alt="icon"
           onClick={onIconClick}
-          style={{
-            cursor: "pointer",
-            position: "absolute",
-            right: "10px",
-            top: "50%",
-            transform: "translateY(-50%)",
-          }}
+          className={styles['icon']}
         />
       )}
     </div>

@@ -2,8 +2,8 @@ import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // Lazy load the Login and SignUp components directly
-const Login = React.lazy(() => import("./pages/Login"));
-const SignUp = React.lazy(() => import("./pages/SignUp"));
+const Login = React.lazy(() => import("./pages/Login/Login"));
+const SignUp = React.lazy(() => import("./pages/SignUp/SignUp"));
 
 const App: React.FC = () => {
   return (
