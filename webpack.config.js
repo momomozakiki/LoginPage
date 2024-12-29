@@ -1,195 +1,135 @@
-/*********************************************************
- * Explanation:
- * 1. JS Output in dist/js/[name].[contenthash:8].js
- *    Example: index.js -> dist/js/index.abc12345.js
- * 2. CSS Output in dist/css/[name].[contenthash:8].css
- *    Example: styles.scss -> dist/css/styles.abc12345.css
- * 3. Images in dist/assets/images/[name].[contenthash:8][ext]
- *    Example: logo.png -> dist/assets/images/logo.abc12345.png
- * 4. CopyWebpackPlugin used only for copying non-imported files
- *    or entire static folders from src/assets to dist/assets,
- *    preserving subfolder structure. It’s optional if you have
- *    assets that are never imported in JS/CSS but still need
- *    to be in dist.
- *********************************************************/
-
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin"); // Import PurgeCSSPlugin
+const glob = require("glob"); // Used to match files for PurgeCSS
 
 module.exports = (env, argv) => {
-  const isProduction = argv.mode === 'production';
+  const isProduction = argv.mode === "production";
 
   return {
-    // Choose 'development' or 'production'
-    mode: isProduction ? 'production' : 'development',
-
-    // Entry point for JS bundling
-    entry: './src/js/index.js',
-
-    // Output configuration
+    mode: isProduction ? "production" : "development", // Set mode to 'production' or 'development'
+    entry: "./src/index.tsx", // Entry point for the application
     output: {
-      path: path.resolve(__dirname, 'dist'),
-      // Keep each original [name], but append an 8-char content hash for caching
-      filename: isProduction
-        ? 'js/[name].[contenthash:8].js'
-        : 'js/[name].js',
-      clean: true, // Clean dist/ before each build
-      // We handle images and fonts via rules below, so no default assetModuleFilename is necessary
+      path: path.resolve(__dirname, "dist"), // Output directory
+      filename: isProduction ? "js/[name].[contenthash:8].js" : "js/[name].js", // Output JS file name with content hash in production
+      clean: true, // Clean the output directory before each build
     },
-
-    // Generate source maps: 'source-map' in dev, none in prod (optional)
-    devtool: isProduction ? false : 'source-map',
-
+    devtool: isProduction ? false : "source-map", // Generate source maps in development
     module: {
       rules: [
-        /**********************
-         * JavaScript / Babel *
-         **********************/
         {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            // If needed, configure .babelrc or babel.config.js
-          },
+          test: /\.(ts|tsx)$/, // Handle TypeScript and JSX files
+          exclude: /node_modules/, // Exclude node_modules
+          use: "babel-loader", // Use Babel for transpilation
         },
-
-        /**********************
-         * CSS / SCSS / PostCSS
-         **********************/
         {
-          test: /\.(scss|css)$/,
+          test: /\.(scss|css)$/, // Handle SCSS and CSS files
           use: [
-            MiniCssExtractPlugin.loader, // Extracts CSS into separate files
+            MiniCssExtractPlugin.loader, // Extract CSS into separate files
             {
-              loader: 'css-loader',
+              loader: "css-loader", // Handle CSS imports
               options: {
-                sourceMap: !isProduction,
+                sourceMap: !isProduction, // Enable source maps in development
               },
             },
             {
-              loader: 'postcss-loader',
+              loader: "postcss-loader", // Process CSS with PostCSS
               options: {
-                sourceMap: !isProduction,
+                sourceMap: !isProduction, // Enable source maps in development
                 postcssOptions: {
                   plugins: [
-                    require('autoprefixer'),
-                    // Only minify CSS in production
-                    isProduction && require('cssnano')({ preset: 'default' }),
-                  ].filter(Boolean),
+                    require("autoprefixer"), // Add vendor prefixes
+                    isProduction && require("cssnano")({ preset: "default" }), // Minify CSS in production
+                  ].filter(Boolean), // Remove falsy values
                 },
               },
             },
             {
-              loader: 'sass-loader',
+              loader: "sass-loader", // Compile SCSS to CSS
               options: {
-                sourceMap: !isProduction,
+                sourceMap: !isProduction, // Enable source maps in development
               },
             },
           ],
         },
-
-        /********************************
-         * Images: asset/resource module
-         ********************************/
         {
-          test: /\.(png|jpe?g|gif|svg)$/i,
-          type: 'asset/resource',
+          test: /\.(png|jpe?g|gif|svg)$/i, // Handle image files
+          type: "asset/resource", // Emit files as separate assets
           generator: {
-            // Keep each original [name], append an 8-char content hash
-            // preserve extension with [ext]
-            filename: 'assets/images/[name].[contenthash:8][ext]',
+            filename: "assets/images/[name].[contenthash:8][ext]", // Output image file name with content hash
           },
         },
-
-        /********************************
-         * (Optional) Additional rules for fonts
-         * if you have fonts in src/assets/fonts
-         ********************************/
-        // {
-        //   test: /\.(woff(2)?|eot|ttf|otf)$/,
-        //   type: 'asset/resource',
-        //   generator: {
-        //     filename: 'assets/fonts/[name].[contenthash:8][ext]',
-        //   },
-        // },
       ],
     },
-
     plugins: [
-      // Extract CSS into dist/css/ with contenthash
       new MiniCssExtractPlugin({
-        filename: isProduction
-          ? 'css/[name].[contenthash:8].css'
-          : 'css/[name].css',
+        filename: isProduction ? "css/[name].[contenthash:8].css" : "css/[name].css", // Output CSS file name with content hash in production
       }),
-
-      // Generate an HTML file (dist/index.html) with automatically injected JS/CSS
       new HtmlWebpackPlugin({
-        template: './src/index.html',
-        inject: 'body', // Inject the assets in the body (usually for JS)
-        // Minify HTML in production
+        template: "./src/index.html", // Use this HTML template
+        inject: "body", // Inject scripts into the body
         minify: isProduction && {
-          removeComments: true,
-          collapseWhitespace: true,
-          minifyJS: true,
-          minifyCSS: true,
+          removeComments: true, // Remove comments in production
+          collapseWhitespace: true, // Collapse whitespace in production
+          minifyJS: true, // Minify JS in production
+          minifyCSS: true, // Minify CSS in production
         },
       }),
-
-      // Copies any non-imported static assets from src/assets to dist/assets
-      // so that they keep original names and subfolders.
-      // If you have assets that are never imported in JS/CSS, they need copying.
       new CopyWebpackPlugin({
         patterns: [
           {
-            // For example, copy entire src/assets folder to dist/assets,
-            // preserving subfolder structure.
-            from: 'src/assets/public',
-            to: 'assets/public',
-            // noErrorOnMissing: true // Use if src/assets might not exist
+            from: "src/assets/public", // Copy static assets
+            to: "assets/public", // Output directory for static assets
+            noErrorOnMissing: true, // Ignore if folder doesn't exist
           },
         ],
       }),
-    ],
+      new BundleAnalyzerPlugin({
+        analyzerMode: isProduction ? "static" : "disabled", // Generate a report in production
+        openAnalyzer: false, // Don't open the report automatically
+      }),
 
-    // Split vendor code vs. application code
-    optimization: {
-      // Only minify in production
-      minimize: isProduction,
-      // Use built-in TerserPlugin for JS
-      minimizer: ['...'],
-      // Create a separate runtime chunk for long-term caching
-      runtimeChunk: 'single',
-      // Auto split vendor and app code
-      splitChunks: {
-        chunks: 'all',
+      // Add PurgeCSSPlugin here
+      isProduction &&
+        new PurgeCSSPlugin({
+          paths: glob.sync(`${path.join(__dirname, "src")}/**/*`, { nodir: true }), // Scan all files in src
+          rejected: true, // isProduction ? false : true Log removed classes during development
+          only: ["css"], // Only apply to CSS files
+          safelist: {
+            standard: [/^btn-/, /^form-/], // Safelist Bootstrap classes (e.g., btn-, form-)
+            deep: [/^modal-backdrop$/], // Safelist dynamically added classes
+          },
+        }),
+    ].filter(Boolean), // Remove falsy values (e.g., `false` when not in production)
+    resolve: {
+      extensions: [".js", ".jsx", ".ts", ".tsx", ".json"], // Resolve these file types
+      alias: {
+        "@components": path.resolve(__dirname, "src/components"), // Alias for components folder
+        "@pages": path.resolve(__dirname, "src/pages"), // Alias for pages folder
       },
     },
-
-    // Webpack Dev Server for local dev
     devServer: {
       static: {
-        directory: path.resolve(__dirname, 'dist'),
+        directory: path.resolve(__dirname, "dist"), // Serve files from the dist directory
       },
-      compress: true,
-      port: 9000,
-      open: true,
-      hot: true,
+      compress: true, // Enable gzip compression
+      port: 9000, // Port for the dev server
+      open: true, // Open the browser automatically
+      hot: true, // Enable hot module replacement
+      historyApiFallback: true, // Enable client-side routing
     },
-
-    // Optional if you import .jsx or .json
-    resolve: {
-      extensions: ['.js', '.jsx', '.json'],
+    optimization: {
+      splitChunks: {
+        chunks: "all", // Split all chunks (including async and non-async)
+      },
     },
-
     performance: {
-      // Show warnings if assets exceed recommended size in production
-      hints: isProduction ? 'warning' : false,
-      maxAssetSize: 300000, // 300 KB
-      maxEntrypointSize: 500000, // 500 KB
+      hints: "warning", // Show warnings instead of errors when size limits are exceeded
+      maxAssetSize: 2 * 1024 * 1024, // Maximum size for individual assets (2 MiB)
+      maxEntrypointSize: 2 * 1024 * 1024, // Maximum size for entry points (2 MiB)
     },
   };
 };

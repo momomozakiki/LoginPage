@@ -1,54 +1,41 @@
- @use "bootstrap/scss/bootstrap";
-
-// src/scss/styles.scss
+@use "bootstrap/scss/bootstrap"; // Use Bootstrap with @use syntax
 
 // Variables
 $primary-color: #3498db;
 $secondary-color: #2ecc71;
 
-// Mixin for button styles
+// Mixins
 @mixin button-styles($bg-color) {
-    background-color: $bg-color;
-    border: none;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
+  background-color: $bg-color;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 // Styles
 .btn {
-    @include button-styles($primary-color);
-    &.btn-secondary {
-        @include button-styles($secondary-color);
-    }
+  @include button-styles($primary-color);
+  &.btn-secondary {
+    @include button-styles($secondary-color);
+  }
 }
 
-
-// Mixins
-@mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-  -moz-border-radius: $radius;
-  border-radius: $radius;
-}
-
-// Body Styling
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   color: #333;
 }
 
-// Header Styling
 header {
   background-color: $primary-color;
   color: white;
   padding: 20px;
   text-align: center;
-  @include border-radius(10px);
+  border-radius: 10px;
 }
 
-// Button Styling
 button {
   background-color: $secondary-color;
   color: white;

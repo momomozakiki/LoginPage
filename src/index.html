@@ -1,45 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Login</title>
-    <link rel="icon" type="image/x-icon" href="./assets/public/favicon.ico">
-    <!-- <link rel="stylesheet" href="css/styles.css"> no need link stylesheet  if we use webpack to handle the scss to css will be generate and inject to the index.html in dist folder-->
-</head>
-<body>
-<header>
-    <h1>My First App</h1>
-</header>
-<main>
-    <img src="./assets/images/logo.png" id="logo" alt="Logo">
-    <form action="/login" method="post">
-        <!-- form elements -->
-        <!-- Username and Password Fields -->
-        <div class="user_id_psw">
-            <div class="input_username">
-                <input type="text" name="username" placeholder="Username">
-            </div>
-            <div class="position-relative" style="height: 100px; border: 1px solid red;">
-                <input class="position-absolute top-50 start-50 translate-middle" type="password" name="password" placeholder="Password" id="password">
-                <img style="max-width : 5%" src="./assets/images/eye_close.png" title="Show password" id="eye-icon">
-            </div>
-            <div class="forget_password">
-                <a href="/forgot_password" aria-label="Go to Forgot Password page">Forgot Password?</a>
-            </div>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="d-grid gap-2 col-2 mx-auto">
-            <button type="submit" class="btn btn-primary">Login</button>
-        </div>
-    </form>
-
-    <!-- Authentication Links -->
-    <div class="d-grid gap-2 col-2 mx-auto">
-        <button href="/signup" class="btn btn-primary" aria-label="Go to Sign Up page">Sign Up</button>
-    </div>
-</main>
-
-<!--  <script src="bundles.js"></script>  no need this script if we use webpack to bundle the javascript -->
-</body>
+    <link rel="icon" type="image/x-icon" href="./assets/public/favicon.ico" />
+    <!-- Favicon -->
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Root element for React -->
+  </body>
 </html>
