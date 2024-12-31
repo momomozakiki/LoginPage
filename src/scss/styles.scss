@@ -1,8 +1,73 @@
 @use "bootstrap/scss/bootstrap"; // Use Bootstrap with @use syntax
 
 // Variables
-$primary-color: #3498db;
+$primary-color: #007bff;
 $secondary-color: #2ecc71;
+
+// Breakpoints
+$mobile: 320px;
+$tablet: 768px;
+$desktop: 1024px;
+
+// Container widths
+$container-mobile: 300px;
+$container-tablet: 400px;
+$container-desktop: 450px;
+
+// Spacing
+$spacing-sm: 8px;
+$spacing-md: 15px;
+$spacing-lg: 20px;
+
+// Mixins for responsive design
+@mixin responsive($breakpoint) {
+  @if $breakpoint == tablet {
+    @media (min-width: $tablet) {
+      @content;
+    }
+  }
+  @if $breakpoint == desktop {
+    @media (min-width: $desktop) {
+      @content;
+    }
+  }
+}
+
+// Common container styles
+.auth-page-container {
+  width: 90%;
+  max-width: $container-mobile;
+  margin: $spacing-lg auto;
+  
+  @include responsive(tablet) {
+    max-width: $container-tablet;
+  }
+  
+  @include responsive(desktop) {
+    max-width: $container-desktop;
+  }
+}
+
+// Form group spacing
+.form-group {
+  margin-bottom: $spacing-md;
+}
+
+// Utility classes for centering
+.center-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-flex-column {
+  @extend .center-flex;
+  flex-direction: column;
+}
+
+.full-height {
+  height: 100vh;
+}
 
 // Mixins
 @mixin button-styles($bg-color) {

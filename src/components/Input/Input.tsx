@@ -4,29 +4,25 @@ import * as styles from './Input.module.scss';
 interface InputProps {
   type: string;
   placeholder: string;
-  icon?: string;
-  onIconClick?: () => void;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
   type,
   placeholder,
-  icon,
-  onIconClick,
+  value,
+  onChange,
 }) => {
   return (
-    <div className="position-relative">
-      {/* An input field with optional icon functionality */}
-      <input type={type} placeholder={placeholder} className="form-control" />
-      {icon && (
-        // Display an icon for additional interactivity (e.g., show/hide password)
-        <img
-          src={icon}
-          alt="icon"
-          onClick={onIconClick}
-          className={styles.icon} // className={styles['icon']}
-        />
-      )}
+    <div className={styles['input-wrapper']}>
+      <input 
+        type={type} 
+        placeholder={placeholder} 
+        className={styles.input}
+        value={value}
+        onChange={onChange}
+      />
     </div>
   );
 };

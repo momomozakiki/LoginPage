@@ -12,11 +12,16 @@
     "isolatedModules": true,
     "noEmit": true,
     "baseUrl": ".",
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types"],
     "paths": {
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"]
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "files": [
+    "src/@types/index.d.ts"
+  ]
 }

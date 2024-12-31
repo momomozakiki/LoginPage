@@ -84,7 +84,7 @@ module.exports = (env, argv) => {
             from: "src/assets/public", // Copy static assets
             to: "assets/public", // Output directory for static assets
             noErrorOnMissing: true, // Ignore if folder doesn't exist
-          },
+          }
         ],
       }),
       new BundleAnalyzerPlugin({
