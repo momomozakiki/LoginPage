@@ -82,7 +82,19 @@ development environment at different system without any problem
 |                                              |                                                                                                      | TBA  |
 
 
-## Refresh used of command
-- git remote -v (to show the current origin remote url)
-- git remote set-url origin <new-repository-url>  (change to new repository url)
+## Important Note
+> className
+```
+Both className={styles.icon} and className={styles['icon']} work the same way in this specific case, because icon is a valid JavaScript identifier (no special characters or hyphens).
+
+- When to use dot notation (styles.icon)
+Use it whenever the class name is a valid JavaScript identifier (e.g., icon, buttonPrimary).
+It's more readable and considered a cleaner syntax.
+
+- When to use bracket notation (styles['some-class'])
+Use it when the class name contains characters that are not valid in dot notation (e.g., hyphens, numbers at the start, special symbols: .some-class, .2columns, etc.).
+If you need to dynamically access a class name (e.g., styles[someDynamicKey]), bracket notation is necessary.
+```
+
+
 

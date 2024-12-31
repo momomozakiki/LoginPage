@@ -38,7 +38,7 @@ const Login: React.FC = () => {
         <Button type="submit">Login</Button>
       </form>
       {/* Button to navigate to the SignUp page */}
-      <Button type="button" onClick={() => navigate("/signup")} className={styles['signup-button']}>
+      <Button type="button" onClick={() => navigate("/signup")}>
         Sign Up
       </Button>
     </div>

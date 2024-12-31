@@ -37,15 +37,3 @@ header {
   border-radius: 10px;
 }
 
-button {
-  background-color: $secondary-color;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: darken($secondary-color, 10%);
-  }
-}

@@ -8,7 +8,7 @@ const glob = require("glob"); // Used to match files for PurgeCSS
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === "production";
-
+  
   return {
     mode: isProduction ? "production" : "development", // Set mode to 'production' or 'development'
     entry: "./src/index.tsx", // Entry point for the application

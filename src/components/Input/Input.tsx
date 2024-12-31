@@ -24,7 +24,7 @@ const Input: React.FC<InputProps> = ({
           src={icon}
           alt="icon"
           onClick={onIconClick}
-          className={styles['icon']}
+          className={styles.icon} // className={styles['icon']}
         />
       )}
     </div>

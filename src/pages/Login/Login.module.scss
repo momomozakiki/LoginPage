@@ -1,11 +1,14 @@
 .login-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f4f4f4;
+  flex-direction: column;        /* Optional, if you want column layout */
+  align-items: center;          /* Horizontal centering of child elements */
+  justify-content: center;      /* Vertical centering of child elements */
+  height: 100vh;                /* Fill entire browser viewport height */
+  max-width: 300px;             /* Limit width to 300px */
+  margin: 0 auto;               /* Keep container itself centered horizontally if viewport is wider */
+  // background-color: #51e2f5;
 }
+
 
 .logo {
   width: 150px;
@@ -19,12 +22,10 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
 }
 
 .form-group {
   margin-bottom: 15px;
 }
 
-.signup-button {
-  margin-top: 10px;
-}
