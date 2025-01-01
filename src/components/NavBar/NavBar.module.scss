@@ -1,0 +1,96 @@
+@import '../../scss/variables';
+
+.navbar {
+  position: fixed;
+  bottom: $spacing-md;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  padding: $spacing-sm $spacing-lg;
+  z-index: 1000;
+  border-radius: 50px;
+  width: 90%;
+  max-width: $container-mobile;
+  transition: all 0.3s ease;
+  
+  @include responsive(tablet) {
+    max-width: $container-tablet;
+  }
+  
+  @include responsive(desktop) {
+    max-width: $container-desktop;
+  }
+  
+  &:not(:has(.label)) {
+    padding: $spacing-sm calc($spacing-lg / 2);
+  }
+  
+  &.compact {
+    padding: $spacing-sm calc($spacing-lg / 2);
+  }
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #666;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: $spacing-sm;
+  min-width: 64px;
+  
+  &:hover {
+    color: $primary-color;
+  }
+  
+  &.active {
+    color: $primary-color;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      width: 40px;
+      height: 40px;
+      background-color: $primary-color;
+      border-radius: 50%;
+      z-index: -1;
+    }
+    
+    .icon {
+      color: white;
+      transform: translateY(-20px);
+    }
+    
+    .label {
+      font-weight: 600;
+      transform: translateY(-8px);
+    }
+  }
+}
+
+.icon {
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+  height: 16px;
+  
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+  }
+} 

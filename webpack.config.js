@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { PurgeCSSPlugin } = require("purgecss-webpack-plugin"); // Import PurgeCSSPlugin
 const glob = require("glob"); // Used to match files for PurgeCSS
+const webpack = require('webpack');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === "production";
@@ -26,33 +27,22 @@ module.exports = (env, argv) => {
           use: "babel-loader", // Use Babel for transpilation
         },
         {
-          test: /\.(scss|css)$/, // Handle SCSS and CSS files
+          test: /\.scss$/,
           use: [
-            MiniCssExtractPlugin.loader, // Extract CSS into separate files
+            MiniCssExtractPlugin.loader,
             {
-              loader: "css-loader", // Handle CSS imports
+              loader: 'css-loader',
               options: {
-                sourceMap: !isProduction, // Enable source maps in development
-              },
-            },
-            {
-              loader: "postcss-loader", // Process CSS with PostCSS
-              options: {
-                sourceMap: !isProduction, // Enable source maps in development
-                postcssOptions: {
-                  plugins: [
-                    require("autoprefixer"), // Add vendor prefixes
-                    isProduction && require("cssnano")({ preset: "default" }), // Minify CSS in production
-                  ].filter(Boolean), // Remove falsy values
+                modules: {
+                  auto: true,
+                  localIdentName: isProduction
+                    ? '[hash:base64]'
+                    : '[local]--[hash:base64:5]',
                 },
               },
             },
-            {
-              loader: "sass-loader", // Compile SCSS to CSS
-              options: {
-                sourceMap: !isProduction, // Enable source maps in development
-              },
-            },
+            'postcss-loader',
+            'sass-loader',
           ],
         },
         {
@@ -66,7 +56,8 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: isProduction ? "css/[name].[contenthash:8].css" : "css/[name].css", // Output CSS file name with content hash in production
+        ignoreOrder: true,
+        filename: isProduction ? "css/[name].[contenthash].css" : "css/[name].css",
       }),
       new HtmlWebpackPlugin({
         template: "./src/index.html", // Use this HTML template
@@ -103,6 +94,12 @@ module.exports = (env, argv) => {
             deep: [/^modal-backdrop$/], // Safelist dynamically added classes
           },
         }),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development'),
+          REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL || 'http://localhost:3000/api')
+        }
+      }),
     ].filter(Boolean), // Remove falsy values (e.g., `false` when not in production)
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx", ".json"], // Resolve these file types
@@ -123,13 +120,38 @@ module.exports = (env, argv) => {
     },
     optimization: {
       splitChunks: {
-        chunks: "all", // Split all chunks (including async and non-async)
+        chunks: 'all',
+        maxInitialRequests: Infinity, // Remove limit on number of initial chunks
+        minSize: 0, // Allow chunks of any size
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/, // Target node_modules packages
+            name(module) {
+              // Create separate chunks for each vendor package
+              const packageName = module.context.match(
+                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+              )[1];
+              
+              // Clean package name for URL compatibility
+              return `vendor.${packageName.replace('@', '')}`;
+            },
+          },
+          styles: {
+            name: 'styles',
+            test: /\.css$/, // Bundle CSS files separately
+            chunks: 'all',
+            enforce: true, // Force CSS into separate chunks
+          },
+        },
       },
+      runtimeChunk: 'single', // Extract webpack runtime into single chunk
+      moduleIds: 'deterministic',
+      chunkIds: 'deterministic',
     },
     performance: {
-      hints: "warning", // Show warnings instead of errors when size limits are exceeded
-      maxAssetSize: 2 * 1024 * 1024, // Maximum size for individual assets (2 MiB)
-      maxEntrypointSize: 2 * 1024 * 1024, // Maximum size for entry points (2 MiB)
+      hints: isProduction ? 'warning' : false, // Show size warnings only in production
+      maxEntrypointSize: 512000, // Reduced from 2MB to 512KB
+      maxAssetSize: 512000, // Reduced from 2MB to 512KB
     },
   };
 };

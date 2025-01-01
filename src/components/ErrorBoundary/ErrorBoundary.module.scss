@@ -1,0 +1,27 @@
+@import '../../scss/variables';
+
+.errorContainer {
+  padding: $spacing-lg;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+
+  h2 {
+    color: #dc3545;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: $spacing-lg;
+  }
+}
+
+.retryButton {
+  @extend .button;
+  @extend .primary;
+  @extend .medium;
+} 

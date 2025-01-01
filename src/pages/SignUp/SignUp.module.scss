@@ -1,27 +1,36 @@
-.signup-container {
-  width: 90%;
-  margin: 20px auto;
-  max-width: 300px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+@import '../../scss/variables';
+
+// Main container for signup page
+.signupContainer {
+  @extend %auth-container;
   text-align: center;
-
-  @media (min-width: 768px) {
-    max-width: 400px;
-  }
-
-  @media (min-width: 1024px) {
-    max-width: 450px;
-  }
 }
 
-.signup-form {
-  width: 100%;
+// Header section containing title
+.headerSection {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.form-group {
-  margin-bottom: 15px;
-  width: 100%;
+// Content section containing form
+.contentSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+// Form container
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+// Individual form group wrapper
+.formGroup {
+  margin-bottom: $spacing-md;
+  height: 42px;
 }

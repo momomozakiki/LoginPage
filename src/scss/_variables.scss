@@ -31,15 +31,43 @@ $spacing-lg: 20px;
   }
 }
 
+// Form group base styles
+%form-group-base {
+  margin-bottom: $spacing-lg;
+  height: 42px;
+  width: 100%;
+}
+
 // Common container styles
 %auth-container {
   width: 90%;
   max-width: $container-mobile;
-  margin: $spacing-lg auto;
+  height: 500px;
+  max-height: 80vh;
+  margin: auto;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  
+  // Header section takes 20vh
+  .headerSection {
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+  }
+  
+  // Content section takes remaining space
+  .contentSection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
   
   @include responsive(tablet) {
     max-width: $container-tablet;
@@ -47,5 +75,28 @@ $spacing-lg: 20px;
   
   @include responsive(desktop) {
     max-width: $container-desktop;
+  }
+  
+  .formGroup {
+    @extend %form-group-base;
+  }
+}
+
+%floating-label {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #666;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  background: white;
+  padding: 0 4px;
+
+  &.active {
+    top: 0;
+    font-size: 12px;
+    color: $primary-color;
   }
 }

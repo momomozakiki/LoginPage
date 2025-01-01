@@ -1,40 +1,58 @@
-import React from "react";
-import Input from "../Input/Input";
-import eyeClose from "../../assets/images/eye_close.png";
-import eyeOpen from "../../assets/images/eye_open.png";
+import React, { useState, InputHTMLAttributes } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import * as styles from './PasswordEye.module.scss';
 
-interface PasswordEyeProps {
-  placeholder?: string;
+interface PasswordEyeProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  label?: string;
 }
 
 const PasswordEye: React.FC<PasswordEyeProps> = ({ 
-  placeholder = "Password",
-  value,
-  onChange 
+  value, 
+  onChange, 
+  error,
+  label = "Password",
+  ...props
 }) => {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(false);
 
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHasValue(!!e.target.value);
+    onChange?.(e);
   };
 
   return (
-    <div className={styles.passwordContainer}>
-      <Input 
-        type={showPassword ? "text" : "password"} 
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange?.(e.target.value)}
-      />
-      <img
-        src={showPassword ? eyeOpen : eyeClose}
-        alt="toggle password visibility"
-        onClick={togglePassword}
-        className={styles.eyeIcon}
-      />
+    <div className={styles.container}>
+      <div className={styles.inputWrapper}>
+        {label && (
+          <label 
+            className={`${styles.label} ${(isFocused || hasValue) ? styles.active : ''}`}
+          >
+            {label}
+          </label>
+        )}
+        <input
+          type={showPassword ? "text" : "password"}
+          value={value}
+          onChange={handleChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className={`${styles.input} ${error ? styles.error : ''}`}
+          {...props}
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className={styles.eyeButton}
+        >
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </button>
+      </div>
+      {error && <span className={styles.errorMessage}>{error}</span>}
     </div>
   );
 };
