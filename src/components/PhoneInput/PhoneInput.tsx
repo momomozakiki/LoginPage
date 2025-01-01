@@ -7,6 +7,7 @@ interface PhoneInputProps {
   onCountryCodeChange: (value: string) => void;
   onPhoneNumberChange: (value: string) => void;
   error?: string;
+  id?: string;
 }
 
 // Common country codes with ISO country codes
@@ -33,25 +34,36 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   phoneNumber,
   onCountryCodeChange,
   onPhoneNumberChange,
-  error
+  error,
+  id = 'phone-input'
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
 
   const selectedCountry = countryCodes.find(c => c.code === countryCode)?.country;
+  const errorId = error ? `${id}-error` : undefined;
+  const countryId = `${id}-country`;
+  const phoneId = `${id}-number`;
 
   return (
-    <div className={styles.phoneInputGroup}>
+    <div 
+      className={styles.phoneInputGroup}
+      role="group" 
+      aria-labelledby={`${id}-label`}
+      aria-describedby={errorId}
+    >
       <div className={styles.countryCodeContainer}>
         {selectedCountry && (
           <span className={styles.countryLabel}>{selectedCountry}</span>
         )}
         <select
+          id={`${id}-select`}
           className={styles.countryCode}
           value={countryCode}
           onChange={(e) => onCountryCodeChange(e.target.value)}
+          aria-labelledby={countryId}
         >
-          {countryCodes.map(({ code, country }) => (
+          {countryCodes.map(({ code }) => (
             <option key={code} value={code}>
               {code}
             </option>
@@ -61,10 +73,13 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
       <div className={styles.phoneInputContainer}>
         <label 
           className={`${styles.label} ${(isFocused || hasValue) ? styles.active : ''}`}
+          id={`${id}-label`}
+          htmlFor={phoneId}
         >
           Phone Number
         </label>
         <input
+          id={phoneId}
           type="tel"
           className={`${styles.phoneInput} ${error ? styles.error : ''}`}
           value={phoneNumber}
@@ -74,9 +89,18 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
           }}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          aria-invalid={!!error}
         />
       </div>
-      {error && <span className={styles.errorMessage}>{error}</span>}
+      {error && (
+        <span 
+          id={errorId}
+          className={styles.errorMessage}
+          role="alert"
+        >
+          {error}
+        </span>
+      )}
     </div>
   );
 };

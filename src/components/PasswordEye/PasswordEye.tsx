@@ -1,60 +1,53 @@
-import React, { useState, InputHTMLAttributes } from 'react';
+import React, { useState, InputHTMLAttributes, forwardRef } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Input } from '../../components';
 import * as styles from './PasswordEye.module.scss';
 
 interface PasswordEyeProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
 }
 
-const PasswordEye: React.FC<PasswordEyeProps> = ({ 
+const PasswordEye = forwardRef<HTMLInputElement, PasswordEyeProps>(({ 
   value, 
-  onChange, 
+  onChange,
   error,
   label = "Password",
-  ...props
-}) => {
+  id,
+  ...props 
+}, ref) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHasValue(!!e.target.value);
-    onChange?.(e);
-  };
+  const buttonId = `${id || 'password'}-toggle`;
 
   return (
     <div className={styles.container}>
       <div className={styles.inputWrapper}>
-        {label && (
-          <label 
-            className={`${styles.label} ${(isFocused || hasValue) ? styles.active : ''}`}
-          >
-            {label}
-          </label>
-        )}
-        <input
+        <Input
           type={showPassword ? "text" : "password"}
           value={value}
-          onChange={handleChange}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          className={`${styles.input} ${error ? styles.error : ''}`}
+          onChange={onChange}
+          label={label}
+          error={error}
+          ref={ref}
+          aria-describedby={buttonId}
           {...props}
         />
         <button
+          id={buttonId}
           type="button"
           onClick={() => setShowPassword(!showPassword)}
           className={styles.eyeButton}
+          aria-label={showPassword ? "Hide password" : "Show password"}
+          aria-pressed={showPassword}
         >
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </button>
       </div>
-      {error && <span className={styles.errorMessage}>{error}</span>}
     </div>
   );
-};
+});
+
+PasswordEye.displayName = 'PasswordEye';
 
 export default PasswordEye; 

@@ -1,4 +1,5 @@
-@import '../../scss/variables';
+// @import '../../scss/variables';
+@use '../../scss/variables' as vars;
 
 .button {
   position: relative;
@@ -17,40 +18,45 @@
     opacity: 0.7;
     cursor: not-allowed;
   }
+
+  &.autoWidth {
+    width: auto;
+    min-width: min-content;
+  }
 }
 
 // Variants
 .primary {
-  background-color: $primary-color;
+  background-color: vars.$primary-color;
   color: white;
   
   &:hover:not(:disabled) {
-    background-color: darken($primary-color, 10%);
+    background-color: darken(vars.$primary-color, 10%);
   }
 }
 
 .secondary {
-  background-color: $secondary-color;
+  background-color: vars.$secondary-color;
   color: white;
 
   &:hover:not(:disabled) {
-    background-color: darken($secondary-color, 10%);
+    background-color: darken(vars.$secondary-color, 10%);
   }
 }
 
 // Sizes
 .small {
-  padding: $spacing-sm $spacing-md;
+  padding: vars.$spacing-sm vars.$spacing-md;
   font-size: 14px;
 }
 
 .medium {
-  padding: $spacing-md $spacing-lg;
+  padding: vars.$spacing-md vars.$spacing-lg;
   font-size: 16px;
 }
 
 .large {
-  padding: $spacing-lg ($spacing-lg * 1.5);
+  padding: vars.$spacing-lg (vars.$spacing-lg * 1.5);
   font-size: 18px;
 }
 

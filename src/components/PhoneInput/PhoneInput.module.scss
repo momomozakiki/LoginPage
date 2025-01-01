@@ -68,10 +68,5 @@
 }
 
 .errorMessage {
-  color: #dc3545;
-  font-size: 12px;
-  margin-top: 5px;
-  position: absolute;
-  bottom: -20px;
-  left: 0;
+  @include error-message;
 } 

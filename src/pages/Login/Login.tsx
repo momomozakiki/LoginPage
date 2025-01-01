@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button, Input, RememberMe } from '../../components';
+import { Button, Input, PasswordEye, RememberMe } from '../../components';
 import { useAuth } from '../../contexts/AuthContext';
 import logo from '../../assets/images/logo.png';
 import * as styles from './Login.module.scss';
+import DocumentTitle from '../../components/DocumentTitle/DocumentTitle';
 
 interface LoginFormData {
   username: string;
@@ -54,40 +55,64 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="center-flex-column full-height">
-      <div className={styles.loginContainer}>
-        <div className={styles.headerSection}>
-          <img src={logo} alt="Logo" className={styles.logo} />
-        </div>
-        <div className={styles.contentSection}>
-          <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
-            <div className={styles.formGroup}>
-              <Input
-                {...register('username')}
-                type="text"
-                label="Username"
-                error={errors.username?.message}
+    <>
+      <DocumentTitle title="Login" />
+      <div className="center-flex-column full-height">
+        <div className={styles.loginContainer}>
+          <div className={styles.headerSection}>
+            <img src={logo} alt="Company Logo" className={styles.logo} />
+          </div>
+          <div className={styles.contentSection}>
+            <form 
+              className={styles.loginForm} 
+              onSubmit={handleSubmit(onSubmit)}
+              noValidate
+              aria-label="Login form"
+            >
+              <div className={styles.formGroup}>
+                <Input
+                  {...register('username')}
+                  type="text"
+                  label="Username"
+                  error={errors.username?.message}
+                  id="login-username"
+                  autoComplete="username"
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <PasswordEye
+                  {...register('password')}
+                  label="Password"
+                  error={errors.password?.message}
+                  id="login-password"
+                  autoComplete="current-password"
+                />
+              </div>
+              <RememberMe
+                {...register('rememberMe')}
+                id="login-remember"
               />
-            </div>
-            <div className={styles.formGroup}>
-              <Input
-                {...register('password')}
-                isPassword
-                label="Password"
-                error={errors.password?.message}
-              />
-            </div>
-            <RememberMe
-              {...register('rememberMe')}
-            />
-            {authError && <div className={styles.error}>{authError}</div>}
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? 'Logging in...' : 'Login'}
-            </Button>
-          </form>
+              {authError && (
+                <div 
+                  className={styles.error}
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {authError}
+                </div>
+              )}
+              <Button 
+                type="submit" 
+                disabled={isLoading}
+                isLoading={isLoading}
+              >
+                {isLoading ? 'Logging in...' : 'Login'}
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

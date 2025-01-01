@@ -8,6 +8,7 @@ interface RememberMeProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'o
 
 const RememberMe = forwardRef<HTMLInputElement, RememberMeProps>(({ 
   onChange,
+  id = 'remember-me',
   ...props 
 }, ref) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,21 +16,26 @@ const RememberMe = forwardRef<HTMLInputElement, RememberMeProps>(({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} role="group" aria-labelledby={`${id}-group`}>
       <div className={styles.leftSection}>
-        <label className={styles.label}>
+        <label className={styles.label} htmlFor={id}>
           <input
             type="checkbox"
             className={styles.checkbox}
             onChange={handleChange}
             ref={ref}
+            id={id}
             {...props}
           />
           <span className={styles.text}>Remember me</span>
         </label>
       </div>
       <div className={styles.rightSection}>
-        <a href="/reset-password" className={styles.forgotPassword}>
+        <a 
+          href="/reset-password" 
+          className={styles.forgotPassword}
+          aria-label="Reset your password"
+        >
           Forgot Password?
         </a>
       </div>

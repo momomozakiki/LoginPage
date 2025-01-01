@@ -6,6 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium' | 'large';
   isLoading?: boolean;
+  fullWidth?: boolean;
   children: React.ReactNode;
 }
 
@@ -13,9 +14,11 @@ const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'medium',
   isLoading = false,
+  fullWidth = true,
   children,
   className,
   disabled,
+  type = 'button',
   ...props
 }) => {
   const buttonClasses = [
@@ -23,6 +26,7 @@ const Button: React.FC<ButtonProps> = ({
     styles[variant],
     styles[size],
     isLoading && styles.loading,
+    !fullWidth && styles.autoWidth,
     className
   ].filter(Boolean).join(' ');
 
@@ -30,13 +34,22 @@ const Button: React.FC<ButtonProps> = ({
     <button 
       className={buttonClasses}
       disabled={disabled || isLoading}
+      type={type}
+      aria-busy={isLoading}
+      aria-disabled={disabled || isLoading}
       {...props}
     >
       {isLoading ? (
-        <span className={styles.spinner} />
+        <span 
+          className={styles.spinner} 
+          role="status"
+          aria-label="Loading"
+        />
       ) : children}
     </button>
   );
 };
+
+Button.displayName = 'Button';
 
 export default Button;

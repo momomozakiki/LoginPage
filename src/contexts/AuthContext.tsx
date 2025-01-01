@@ -7,6 +7,11 @@ interface User {
   email?: string;
 }
 
+interface AuthResponse {
+  user: User;
+  token: string;
+}
+
 interface AuthContextType {
   user: User | null;
   login: (username: string, password: string) => Promise<void>;
@@ -32,7 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const validateSession = async (token: string) => {
     try {
-      const response = await authService.validateToken(token);
+      const response = await authService.validateToken(token) as AuthResponse;
       setUser(response.user);
     } catch {
       sessionStorage.removeItem('authToken');
@@ -44,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true);
     setError(null);
     try {
-      const response = await authService.login({ username, password });
+      const response = await authService.login({ username, password }) as AuthResponse;
       sessionStorage.setItem('authToken', response.token);
       setUser(response.user);
       navigate('/dashboard');

@@ -49,8 +49,10 @@ $spacing-lg: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: $spacing-lg;
+  padding-bottom: $spacing-lg * 3;
   display: flex;
   flex-direction: column;
+  margin-bottom: $spacing-lg * 4;
   
   // Header section takes 20vh
   .headerSection {
@@ -99,4 +101,14 @@ $spacing-lg: 20px;
     font-size: 12px;
     color: $primary-color;
   }
+}
+
+// Add this mixin
+@mixin error-message {
+  color: #dc3545;
+  font-size: 12px;
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  text-align: right;
 }

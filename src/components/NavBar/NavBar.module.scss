@@ -2,7 +2,7 @@
 
 .navbar {
   position: fixed;
-  bottom: $spacing-md;
+  bottom: $spacing-lg;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -16,6 +16,7 @@
   width: 90%;
   max-width: $container-mobile;
   transition: all 0.3s ease;
+  margin-bottom: $spacing-lg;
   
   @include responsive(tablet) {
     max-width: $container-tablet;
