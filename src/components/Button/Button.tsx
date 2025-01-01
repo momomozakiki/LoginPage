@@ -1,5 +1,6 @@
 // Button.tsx
 import React from "react";
+import classNames from 'classnames';
 import * as styles from "./Button.module.scss";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
