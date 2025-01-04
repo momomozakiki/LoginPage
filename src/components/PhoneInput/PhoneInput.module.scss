@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@import "../../scss/variables";
 
 .phoneInputGroup {
   @extend %form-group-base;
@@ -32,7 +32,7 @@
   font-size: 16px;
   appearance: none;
   background: transparent;
-  
+
   &:focus {
     outline: none;
     border-color: $primary-color;
@@ -69,4 +69,4 @@
 
 .errorMessage {
   @include error-message;
-} 
+}

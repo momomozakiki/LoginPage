@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@import "../../scss/variables";
 
 .navbar {
   position: fixed;
@@ -17,19 +17,19 @@
   max-width: $container-mobile;
   transition: all 0.3s ease;
   margin-bottom: $spacing-lg;
-  
+
   @include responsive(tablet) {
     max-width: $container-tablet;
   }
-  
+
   @include responsive(desktop) {
     max-width: $container-desktop;
   }
-  
+
   &:not(:has(.label)) {
     padding: $spacing-sm calc($spacing-lg / 2);
   }
-  
+
   &.compact {
     padding: $spacing-sm calc($spacing-lg / 2);
   }
@@ -45,16 +45,16 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: $spacing-sm;
   min-width: 64px;
-  
+
   &:hover {
     color: $primary-color;
   }
-  
+
   &.active {
     color: $primary-color;
-    
+
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: -15px;
       width: 40px;
@@ -63,12 +63,12 @@
       border-radius: 50%;
       z-index: -1;
     }
-    
+
     .icon {
       color: white;
       transform: translateY(-20px);
     }
-    
+
     .label {
       font-weight: 600;
       transform: translateY(-8px);
@@ -88,10 +88,10 @@
   opacity: 1;
   visibility: visible;
   height: 16px;
-  
+
   &.hidden {
     opacity: 0;
     visibility: hidden;
     height: 0;
   }
-} 
+}

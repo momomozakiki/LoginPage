@@ -1,10 +1,10 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { Button, Input, PasswordEye } from '../../components';
-import * as styles from './SignUp.module.scss';
-import DocumentTitle from '../../components/DocumentTitle/DocumentTitle';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Button, Input, PasswordEye } from "../../components";
+import * as styles from "./SignUp.module.scss";
+import DocumentTitle from "../../components/DocumentTitle/DocumentTitle";
 
 interface SignUpForm {
   username: string;
@@ -12,17 +12,24 @@ interface SignUpForm {
   password: string;
 }
 
-const schema = yup.object({
-  username: yup.string().required('Username is required'),
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters'),
-}).required();
+const schema = yup
+  .object({
+    username: yup.string().required("Username is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+  })
+  .required();
 
 const SignUp: React.FC = () => {
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignUpForm>({
-    resolver: yupResolver(schema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignUpForm>({
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data: SignUpForm) => {
@@ -30,7 +37,7 @@ const SignUp: React.FC = () => {
       console.log(data);
       // Handle sign up logic
     } catch (error) {
-      console.error('Sign up failed:', error);
+      console.error("Sign up failed:", error);
     }
   };
 
@@ -43,15 +50,15 @@ const SignUp: React.FC = () => {
             <h1 id="signup-title">Create Account</h1>
           </div>
           <div className={styles.contentSection}>
-            <form 
-              className={styles.signupForm} 
+            <form
+              className={styles.signupForm}
               onSubmit={handleSubmit(onSubmit)}
               noValidate
               aria-labelledby="signup-title"
             >
               <div className={styles.formGroup}>
                 <Input
-                  {...register('username')}
+                  {...register("username")}
                   type="text"
                   label="Username"
                   error={errors.username?.message}
@@ -61,7 +68,7 @@ const SignUp: React.FC = () => {
               </div>
               <div className={styles.formGroup}>
                 <Input
-                  {...register('email')}
+                  {...register("email")}
                   type="email"
                   label="Email"
                   error={errors.email?.message}
@@ -71,19 +78,19 @@ const SignUp: React.FC = () => {
               </div>
               <div className={styles.formGroup}>
                 <PasswordEye
-                  {...register('password')}
+                  {...register("password")}
                   label="Password"
                   error={errors.password?.message}
                   id="signup-password"
                   autoComplete="new-password"
                 />
               </div>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubmitting}
                 isLoading={isSubmitting}
               >
-                {isSubmitting ? 'Creating Account...' : 'Sign Up'}
+                {isSubmitting ? "Creating Account..." : "Sign Up"}
               </Button>
             </form>
           </div>

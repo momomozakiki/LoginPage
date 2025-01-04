@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { Button, Input, PhoneInput, PasswordEye, OtpInput } from '../../components';
-import * as styles from './ResetPassword.module.scss';
-import DocumentTitle from '../../components/DocumentTitle/DocumentTitle';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import {
+  Button,
+  Input,
+  PhoneInput,
+  PasswordEye,
+  OtpInput,
+} from "../../components";
+import * as styles from "./ResetPassword.module.scss";
+import DocumentTitle from "../../components/DocumentTitle/DocumentTitle";
 
 interface ResetPasswordForm {
   email: string;
@@ -14,29 +20,38 @@ interface ResetPasswordForm {
   newPassword: string;
 }
 
-const schema = yup.object({
-  email: yup.string().email('Invalid email').required('Email is required'),
-  countryCode: yup.string().required('Country code is required'),
-  phoneNumber: yup.string().required('Phone number is required'),
-  otp: yup.string().required('OTP is required'),
-  newPassword: yup.string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters'),
-}).required();
+const schema = yup
+  .object({
+    email: yup.string().email("Invalid email").required("Email is required"),
+    countryCode: yup.string().required("Country code is required"),
+    phoneNumber: yup.string().required("Phone number is required"),
+    otp: yup.string().required("OTP is required"),
+    newPassword: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+  })
+  .required();
 
 const ResetPassword: React.FC = () => {
-  const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, trigger } = useForm<ResetPasswordForm>({
-    resolver: yupResolver(schema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+    trigger,
+  } = useForm<ResetPasswordForm>({
+    resolver: yupResolver(schema),
   });
 
-  const [countryCode, setCountryCode] = useState('+60');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [countryCode, setCountryCode] = useState("+60");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [otpSent, setOtpSent] = useState(false);
 
   const handlePhoneNumberChange = (value: string) => {
     setPhoneNumber(value);
-    setValue('phoneNumber', value);
-    trigger('phoneNumber'); // This will trigger validation
+    setValue("phoneNumber", value);
+    trigger("phoneNumber"); // This will trigger validation
   };
 
   const onSubmit = async (data: ResetPasswordForm) => {
@@ -44,7 +59,7 @@ const ResetPassword: React.FC = () => {
       console.log(data);
       // Handle reset password logic
     } catch (error) {
-      console.error('Reset password failed:', error);
+      console.error("Reset password failed:", error);
     }
   };
 
@@ -53,7 +68,7 @@ const ResetPassword: React.FC = () => {
       setOtpSent(true);
       // Handle OTP sending logic
     } catch (error) {
-      console.error('OTP sending failed:', error);
+      console.error("OTP sending failed:", error);
     }
   };
 
@@ -66,15 +81,15 @@ const ResetPassword: React.FC = () => {
             <h1 id="reset-title">Reset Password</h1>
           </div>
           <div className={styles.contentSection}>
-            <form 
-              className={styles.resetForm} 
+            <form
+              className={styles.resetForm}
               onSubmit={handleSubmit(onSubmit)}
               noValidate
               aria-labelledby="reset-title"
             >
               <div className={styles.formGroup}>
                 <Input
-                  {...register('email')}
+                  {...register("email")}
                   type="email"
                   label="Email"
                   error={errors.email?.message}
@@ -94,7 +109,7 @@ const ResetPassword: React.FC = () => {
               </div>
               <div className={styles.formGroup}>
                 <OtpInput
-                  {...register('otp')}
+                  {...register("otp")}
                   label="OTP"
                   error={errors.otp?.message}
                   id="reset-otp"
@@ -105,19 +120,19 @@ const ResetPassword: React.FC = () => {
               </div>
               <div className={styles.formGroup}>
                 <PasswordEye
-                  {...register('newPassword')}
+                  {...register("newPassword")}
                   label="New Password"
                   error={errors.newPassword?.message}
                   id="reset-password"
                   autoComplete="new-password"
                 />
               </div>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubmitting}
                 isLoading={isSubmitting}
               >
-                {isSubmitting ? 'Resetting Password...' : 'Reset Password'}
+                {isSubmitting ? "Resetting Password..." : "Reset Password"}
               </Button>
             </form>
           </div>
@@ -127,4 +142,4 @@ const ResetPassword: React.FC = () => {
   );
 };
 
-export default ResetPassword; 
+export default ResetPassword;

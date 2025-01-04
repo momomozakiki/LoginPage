@@ -53,7 +53,7 @@ $spacing-lg: 20px;
   display: flex;
   flex-direction: column;
   margin-bottom: $spacing-lg * 4;
-  
+
   // Header section takes 20vh
   .headerSection {
     height: 20vh;
@@ -63,22 +63,22 @@ $spacing-lg: 20px;
     align-items: center;
     margin-bottom: $spacing-lg;
   }
-  
+
   // Content section takes remaining space
   .contentSection {
     flex: 1;
     display: flex;
     flex-direction: column;
   }
-  
+
   @include responsive(tablet) {
     max-width: $container-tablet;
   }
-  
+
   @include responsive(desktop) {
     max-width: $container-desktop;
   }
-  
+
   .formGroup {
     @extend %form-group-base;
   }

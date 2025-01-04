@@ -8,7 +8,9 @@ import LoadingFallback from "./components/LoadingFallback/LoadingFallback";
 // Lazy load the components
 const Login = React.lazy(() => import("./pages/Login/Login"));
 const SignUp = React.lazy(() => import("./pages/SignUp/SignUp"));
-const ResetPassword = React.lazy(() => import("./pages/ResetPassword/ResetPassword"));
+const ResetPassword = React.lazy(
+  () => import("./pages/ResetPassword/ResetPassword"),
+);
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component<
@@ -25,20 +27,17 @@ class ErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Error:', error);
-    console.error('Error Info:', errorInfo);
+    console.error("Error:", error);
+    console.error("Error Info:", errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div 
-          role="alert"
-          className="error-boundary"
-        >
+        <div role="alert" className="error-boundary">
           <h2>Something went wrong</h2>
-          <p>{this.state.error?.message || 'An unexpected error occurred'}</p>
-          <button 
+          <p>{this.state.error?.message || "An unexpected error occurred"}</p>
+          <button
             onClick={() => window.location.reload()}
             className="retry-button"
           >

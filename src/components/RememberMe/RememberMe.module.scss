@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@import "../../scss/variables";
 
 .container {
   width: 100%;
@@ -46,8 +46,8 @@
   color: $primary-color;
   text-decoration: none;
   font-size: 14px;
-  
+
   &:hover {
     text-decoration: underline;
   }
-} 
+}

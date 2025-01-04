@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import * as styles from './PhoneInput.module.scss';
+import React, { useState } from "react";
+import * as styles from "./PhoneInput.module.scss";
 
 interface PhoneInputProps {
   countryCode: string;
@@ -12,21 +12,21 @@ interface PhoneInputProps {
 
 // Common country codes with ISO country codes
 const countryCodes = [
-  { code: '+60', country: 'MY' },  // Malaysia
-  { code: '+65', country: 'SG' },  // Singapore
-  { code: '+62', country: 'ID' },  // Indonesia
-  { code: '+66', country: 'TH' },  // Thailand
-  { code: '+84', country: 'VN' },  // Vietnam
-  { code: '+63', country: 'PH' },  // Philippines
-  { code: '+95', country: 'MM' },  // Myanmar
-  { code: '+856', country: 'LA' }, // Laos
-  { code: '+855', country: 'KH' }, // Cambodia
-  { code: '+673', country: 'BN' }, // Brunei
-  { code: '+82', country: 'KR' },  // South Korea
-  { code: '+81', country: 'JP' },  // Japan
-  { code: '+86', country: 'CN' },  // China
-  { code: '+1', country: 'US' },   // United States
-  { code: '+44', country: 'GB' },  // United Kingdom
+  { code: "+60", country: "MY" }, // Malaysia
+  { code: "+65", country: "SG" }, // Singapore
+  { code: "+62", country: "ID" }, // Indonesia
+  { code: "+66", country: "TH" }, // Thailand
+  { code: "+84", country: "VN" }, // Vietnam
+  { code: "+63", country: "PH" }, // Philippines
+  { code: "+95", country: "MM" }, // Myanmar
+  { code: "+856", country: "LA" }, // Laos
+  { code: "+855", country: "KH" }, // Cambodia
+  { code: "+673", country: "BN" }, // Brunei
+  { code: "+82", country: "KR" }, // South Korea
+  { code: "+81", country: "JP" }, // Japan
+  { code: "+86", country: "CN" }, // China
+  { code: "+1", country: "US" }, // United States
+  { code: "+44", country: "GB" }, // United Kingdom
 ];
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
@@ -35,20 +35,22 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   onCountryCodeChange,
   onPhoneNumberChange,
   error,
-  id = 'phone-input'
+  id = "phone-input",
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
 
-  const selectedCountry = countryCodes.find(c => c.code === countryCode)?.country;
+  const selectedCountry = countryCodes.find(
+    (c) => c.code === countryCode,
+  )?.country;
   const errorId = error ? `${id}-error` : undefined;
   const countryId = `${id}-country`;
   const phoneId = `${id}-number`;
 
   return (
-    <div 
+    <div
       className={styles.phoneInputGroup}
-      role="group" 
+      role="group"
       aria-labelledby={`${id}-label`}
       aria-describedby={errorId}
     >
@@ -71,8 +73,8 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         </select>
       </div>
       <div className={styles.phoneInputContainer}>
-        <label 
-          className={`${styles.label} ${(isFocused || hasValue) ? styles.active : ''}`}
+        <label
+          className={`${styles.label} ${isFocused || hasValue ? styles.active : ""}`}
           id={`${id}-label`}
           htmlFor={phoneId}
         >
@@ -81,7 +83,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         <input
           id={phoneId}
           type="tel"
-          className={`${styles.phoneInput} ${error ? styles.error : ''}`}
+          className={`${styles.phoneInput} ${error ? styles.error : ""}`}
           value={phoneNumber}
           onChange={(e) => {
             setHasValue(!!e.target.value);
@@ -93,11 +95,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         />
       </div>
       {error && (
-        <span 
-          id={errorId}
-          className={styles.errorMessage}
-          role="alert"
-        >
+        <span id={errorId} className={styles.errorMessage} role="alert">
           {error}
         </span>
       )}
@@ -105,4 +103,4 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   );
 };
 
-export default PhoneInput; 
+export default PhoneInput;

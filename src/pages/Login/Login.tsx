@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { Button, Input, PasswordEye, RememberMe } from '../../components';
-import { useAuth } from '../../contexts/AuthContext';
-import logo from '../../assets/images/logo.png';
-import * as styles from './Login.module.scss';
-import DocumentTitle from '../../components/DocumentTitle/DocumentTitle';
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Button, Input, PasswordEye, RememberMe } from "../../components";
+import { useAuth } from "../../contexts/AuthContext";
+import logo from "../../assets/images/logo.png";
+import * as styles from "./Login.module.scss";
+import DocumentTitle from "../../components/DocumentTitle/DocumentTitle";
 
 interface LoginFormData {
   username: string;
@@ -14,31 +14,40 @@ interface LoginFormData {
   rememberMe?: boolean;
 }
 
-const schema = yup.object({
-  username: yup.string().required('Username is required'),
-  password: yup.string()
-    .required('Password is required')
-    .min(8, 'Password must be at least 8 characters'),
-  rememberMe: yup.boolean(),
-}).required();
+const schema = yup
+  .object({
+    username: yup.string().required("Username is required"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+    rememberMe: yup.boolean(),
+  })
+  .required();
 
 const Login: React.FC = () => {
   const { login, isLoading, error: authError } = useAuth();
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<LoginFormData>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
     defaultValues: {
-      username: localStorage.getItem('username') || '',
-      rememberMe: localStorage.getItem('rememberMe') === 'true'
-    }
+      username: localStorage.getItem("username") || "",
+      rememberMe: localStorage.getItem("rememberMe") === "true",
+    },
   });
 
-  const rememberMe = watch('rememberMe');
+  const rememberMe = watch("rememberMe");
 
   useEffect(() => {
     if (rememberMe !== undefined) {
-      localStorage.setItem('rememberMe', rememberMe.toString());
+      localStorage.setItem("rememberMe", rememberMe.toString());
       if (!rememberMe) {
-        localStorage.removeItem('username');
+        localStorage.removeItem("username");
       }
     }
   }, [rememberMe]);
@@ -47,10 +56,10 @@ const Login: React.FC = () => {
     try {
       await login(data.username, data.password);
       if (data.rememberMe) {
-        localStorage.setItem('username', data.username);
+        localStorage.setItem("username", data.username);
       }
     } catch (err) {
-      console.error('Login failed:', err);
+      console.error("Login failed:", err);
     }
   };
 
@@ -63,15 +72,15 @@ const Login: React.FC = () => {
             <img src={logo} alt="Company Logo" className={styles.logo} />
           </div>
           <div className={styles.contentSection}>
-            <form 
-              className={styles.loginForm} 
+            <form
+              className={styles.loginForm}
               onSubmit={handleSubmit(onSubmit)}
               noValidate
               aria-label="Login form"
             >
               <div className={styles.formGroup}>
                 <Input
-                  {...register('username')}
+                  {...register("username")}
                   type="text"
                   label="Username"
                   error={errors.username?.message}
@@ -81,32 +90,21 @@ const Login: React.FC = () => {
               </div>
               <div className={styles.formGroup}>
                 <PasswordEye
-                  {...register('password')}
+                  {...register("password")}
                   label="Password"
                   error={errors.password?.message}
                   id="login-password"
                   autoComplete="current-password"
                 />
               </div>
-              <RememberMe
-                {...register('rememberMe')}
-                id="login-remember"
-              />
+              <RememberMe {...register("rememberMe")} id="login-remember" />
               {authError && (
-                <div 
-                  className={styles.error}
-                  role="alert"
-                  aria-live="polite"
-                >
+                <div className={styles.error} role="alert" aria-live="polite">
                   {authError}
                 </div>
               )}
-              <Button 
-                type="submit" 
-                disabled={isLoading}
-                isLoading={isLoading}
-              >
-                {isLoading ? 'Logging in...' : 'Login'}
+              <Button type="submit" disabled={isLoading} isLoading={isLoading}>
+                {isLoading ? "Logging in..." : "Login"}
               </Button>
             </form>
           </div>

@@ -1,4 +1,4 @@
-@import '../../scss/variables';
+@import "../../scss/variables";
 
 .errorContainer {
   padding: $spacing-lg;
@@ -24,4 +24,4 @@
   @extend .button;
   @extend .primary;
   @extend .medium;
-} 
+}

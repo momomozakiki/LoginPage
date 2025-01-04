@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import * as styles from './NavBar.module.scss';
-import { FaUser, FaUserPlus, FaLock } from 'react-icons/fa';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import * as styles from "./NavBar.module.scss";
+import { FaUser, FaUserPlus, FaLock } from "react-icons/fa";
 
-type NavRoute = '/' | '/signup' | '/reset-password';
+type NavRoute = "/" | "/signup" | "/reset-password";
 
 interface NavItem {
   path: NavRoute;
@@ -14,28 +14,28 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    path: '/',
-    label: 'Login',
+    path: "/",
+    label: "Login",
     icon: <FaUser />,
-    ariaLabel: 'Go to login page'
+    ariaLabel: "Go to login page",
   },
   {
-    path: '/signup',
-    label: 'Sign Up',
+    path: "/signup",
+    label: "Sign Up",
     icon: <FaUserPlus />,
-    ariaLabel: 'Go to sign up page'
+    ariaLabel: "Go to sign up page",
   },
   {
-    path: '/reset-password',
-    label: 'Reset',
+    path: "/reset-password",
+    label: "Reset",
     icon: <FaLock />,
-    ariaLabel: 'Go to password reset page'
-  }
+    ariaLabel: "Go to password reset page",
+  },
 ];
 
 const NavBar: React.FC = () => {
   const location = useLocation();
-  const [hiddenLabel, setHiddenLabel] = useState<NavRoute>('/');
+  const [hiddenLabel, setHiddenLabel] = useState<NavRoute>("/");
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -44,26 +44,26 @@ const NavBar: React.FC = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent, path: NavRoute) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       toggleLabel(path);
     }
   };
 
   return (
-    <nav 
+    <nav
       className={styles.navbar}
       role="navigation"
       aria-label="Main navigation"
     >
       {navItems.map(({ path, label, icon, ariaLabel }) => (
-        <Link 
+        <Link
           key={path}
-          to={path} 
-          className={`${styles.navItem} ${isActive(path) ? styles.active : ''}`}
+          to={path}
+          className={`${styles.navItem} ${isActive(path) ? styles.active : ""}`}
           onClick={() => toggleLabel(path)}
           onKeyDown={(e) => handleKeyDown(e, path)}
-          aria-current={isActive(path) ? 'page' : undefined}
+          aria-current={isActive(path) ? "page" : undefined}
           aria-label={ariaLabel}
           role="menuitem"
           tabIndex={0}
@@ -71,7 +71,9 @@ const NavBar: React.FC = () => {
           <span className={styles.icon} aria-hidden="true">
             {icon}
           </span>
-          <span className={`${styles.label} ${hiddenLabel === path ? styles.hidden : ''}`}>
+          <span
+            className={`${styles.label} ${hiddenLabel === path ? styles.hidden : ""}`}
+          >
             {label}
           </span>
         </Link>
@@ -80,4 +82,4 @@ const NavBar: React.FC = () => {
   );
 };
 
-export default NavBar; 
+export default NavBar;

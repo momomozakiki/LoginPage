@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const isDevelopment = true; // You can toggle this manually for now
-const API_URL = 'http://localhost:3000/api'; // Default API URL
+const API_URL = "http://localhost:3000/api"; // Default API URL
 
 interface LoginCredentials {
   username: string;
@@ -21,11 +21,11 @@ interface ResetPasswordData {
 
 // For development/testing
 const mockAuthResponse = {
-  token: 'mock-token',
+  token: "mock-token",
   user: {
-    username: 'testuser',
-    email: 'test@example.com'
-  }
+    username: "testuser",
+    email: "test@example.com",
+  },
 };
 
 class AuthService {
@@ -47,36 +47,36 @@ class AuthService {
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || 'An error occurred');
+        throw new Error(error.response?.data?.message || "An error occurred");
       }
       throw error;
     }
   }
 
   async login(credentials: LoginCredentials) {
-    return this.request('/auth/login', {
-      method: 'POST',
+    return this.request("/auth/login", {
+      method: "POST",
       data: credentials,
     });
   }
 
   async signup(data: SignUpData) {
-    return this.request('/auth/signup', {
-      method: 'POST',
+    return this.request("/auth/signup", {
+      method: "POST",
       data,
     });
   }
 
   async resetPassword(data: ResetPasswordData) {
-    return this.request('/auth/reset-password', {
-      method: 'POST',
+    return this.request("/auth/reset-password", {
+      method: "POST",
       data,
     });
   }
 
   async validateToken(token: string) {
-    return this.request('/auth/validate', {
-      method: 'GET',
+    return this.request("/auth/validate", {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -84,4 +84,4 @@ class AuthService {
   }
 }
 
-export const authService = new AuthService(); 
+export const authService = new AuthService();

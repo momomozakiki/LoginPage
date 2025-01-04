@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { authService } from '../services/authService';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { authService } from "../services/authService";
 
 interface User {
   username: string;
@@ -22,14 +22,16 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = sessionStorage.getItem('authToken');
+    const token = sessionStorage.getItem("authToken");
     if (token) {
       validateSession(token);
     }
@@ -37,10 +39,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const validateSession = async (token: string) => {
     try {
-      const response = await authService.validateToken(token) as AuthResponse;
+      const response = (await authService.validateToken(token)) as AuthResponse;
       setUser(response.user);
     } catch {
-      sessionStorage.removeItem('authToken');
+      sessionStorage.removeItem("authToken");
       setUser(null);
     }
   };
@@ -49,21 +51,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true);
     setError(null);
     try {
-      const response = await authService.login({ username, password }) as AuthResponse;
-      sessionStorage.setItem('authToken', response.token);
+      const response = (await authService.login({
+        username,
+        password,
+      })) as AuthResponse;
+      sessionStorage.setItem("authToken", response.token);
       setUser(response.user);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+      setError(err instanceof Error ? err.message : "Login failed");
     } finally {
       setIsLoading(false);
     }
   };
 
   const logout = () => {
-    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem("authToken");
     setUser(null);
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -76,7 +81,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-}; 
+};

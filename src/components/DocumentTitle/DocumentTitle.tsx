@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 interface DocumentTitleProps {
   title: string;
@@ -17,4 +17,4 @@ const DocumentTitle: React.FC<DocumentTitleProps> = ({ title }) => {
   return null;
 };
 
-export default DocumentTitle; 
+export default DocumentTitle;
