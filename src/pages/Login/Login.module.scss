@@ -3,7 +3,9 @@
 // Main container for the login page
 .loginContainer {
   @extend %auth-container;
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  height: var(--content-height);
 }
 
 // Header section containing logo
@@ -12,6 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: $spacing-lg;
 }
 
 // Logo image styling
@@ -31,8 +34,8 @@
 .loginForm {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
+  width: 100%;
+  padding: $spacing-lg;
 }
 
 // Remember me section
@@ -48,4 +51,20 @@
   margin-bottom: $spacing-md;
   text-align: left;
   padding: 0 $spacing-sm;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+  margin-top: auto;
+  padding-top: $spacing-lg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

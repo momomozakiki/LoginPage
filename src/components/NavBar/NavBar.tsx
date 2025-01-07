@@ -51,33 +51,31 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <nav
-      className={styles.navbar}
-      role="navigation"
-      aria-label="Main navigation"
-    >
-      {navItems.map(({ path, label, icon, ariaLabel }) => (
-        <Link
-          key={path}
-          to={path}
-          className={`${styles.navItem} ${isActive(path) ? styles.active : ""}`}
-          onClick={() => toggleLabel(path)}
-          onKeyDown={(e) => handleKeyDown(e, path)}
-          aria-current={isActive(path) ? "page" : undefined}
-          aria-label={ariaLabel}
-          role="menuitem"
-          tabIndex={0}
-        >
-          <span className={styles.icon} aria-hidden="true">
-            {icon}
-          </span>
-          <span
-            className={`${styles.label} ${hiddenLabel === path ? styles.hidden : ""}`}
-          >
-            {label}
-          </span>
-        </Link>
-      ))}
+    <nav className={styles.navbar}>
+      <div className={styles.navbarContent}>
+        <div className={styles.navItems}>
+          {navItems.map(({ path, label, icon, ariaLabel }) => (
+            <Link
+              key={path}
+              to={path}
+              className={`${styles.navItem} ${isActive(path) ? styles.active : ""}`}
+              onClick={() => toggleLabel(path)}
+              onKeyDown={(e) => handleKeyDown(e, path)}
+              aria-current={isActive(path) ? "page" : undefined}
+              aria-label={ariaLabel}
+              role="menuitem"
+              tabIndex={0}
+            >
+              <span className={styles.icon} aria-hidden="true">
+                {icon}
+              </span>
+              <span className={`${styles.label} ${hiddenLabel === path ? styles.hidden : ""}`}>
+                {label}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
     </nav>
   );
 };

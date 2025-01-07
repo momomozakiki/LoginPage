@@ -1,35 +1,89 @@
+:root {
+  --vh-unit: 1vh;
+  --nav-height: calc(var(--vh-unit) * 8);
+  --content-height: calc(var(--vh-unit) * 92);
+}
+
 // Colors
 $primary-color: #007bff;
 $secondary-color: #2ecc71;
 
 // Breakpoints
-$mobile: 320px;
-$tablet: 768px;
-$desktop: 1024px;
+$ph-min: 320px;
+$ph-max: 767px;
+
+$tb-min: 768px;
+$tb-max: 1023px;
+
+$pc-min: 1024px;
+$pc-max: 1920px;
+
+// Breakpoint mixins
+@mixin ph-only {
+  @media (min-width: $ph-min) and (max-width: $ph-max) {
+    @content;
+  }
+}
+
+@mixin tb-only {
+  @media (min-width: $tb-min) and (max-width: $tb-max) {
+    @content;
+  }
+}
+
+@mixin pc-only {
+  @media (min-width: $pc-min) and (max-width: $pc-max) {
+    @content;
+  }
+}
+
+// Min-width breakpoints
+@mixin ph-up {
+  @media (min-width: $ph-min) {
+    @content;
+  }
+}
+
+@mixin tb-up {
+  @media (min-width: $tb-min) {
+    @content;
+  }
+}
+
+@mixin pc-up {
+  @media (min-width: $pc-min) {
+    @content;
+  }
+}
+
+// Max-width breakpoints
+@mixin ph-down {
+  @media (max-width: $ph-max) {
+    @content;
+  }
+}
+
+@mixin tb-down {
+  @media (max-width: $tb-max) {
+    @content;
+  }
+}
+
+@mixin pc-down {
+  @media (max-width: $pc-max) {
+    @content;
+  }
+}
 
 // Container widths
-$container-mobile: 300px;
-$container-tablet: 400px;
-$container-desktop: 450px;
+$container-mobile: 100%;
+$container-tablet: 720px;
+$container-desktop: 720px;
 
 // Spacing
 $spacing-sm: 8px;
 $spacing-md: 15px;
 $spacing-lg: 20px;
-
-// Mixins for responsive design
-@mixin responsive($breakpoint) {
-  @if $breakpoint == tablet {
-    @media (min-width: $tablet) {
-      @content;
-    }
-  }
-  @if $breakpoint == desktop {
-    @media (min-width: $desktop) {
-      @content;
-    }
-  }
-}
 
 // Form group base styles
 %form-group-base {
@@ -40,19 +94,26 @@ $spacing-lg: 20px;
 
 // Common container styles
 %auth-container {
-  width: 90%;
-  max-width: $container-mobile;
-  height: 500px;
-  max-height: 80vh;
-  margin: auto;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: $spacing-lg;
-  padding-bottom: $spacing-lg * 3;
   display: flex;
   flex-direction: column;
-  margin-bottom: $spacing-lg * 4;
+
+  @include tb-up {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: $spacing-lg;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  @include pc-up {
+    max-width: $container-desktop;
+  }
 
   // Header section takes 20vh
   .headerSection {
@@ -69,14 +130,6 @@ $spacing-lg: 20px;
     flex: 1;
     display: flex;
     flex-direction: column;
-  }
-
-  @include responsive(tablet) {
-    max-width: $container-tablet;
-  }
-
-  @include responsive(desktop) {
-    max-width: $container-desktop;
   }
 
   .formGroup {
@@ -112,3 +165,7 @@ $spacing-lg: 20px;
   right: 0;
   text-align: right;
 }
+
+// Add layout variables
+$page-padding: $spacing-lg;
+$container-max-width: $container-mobile;

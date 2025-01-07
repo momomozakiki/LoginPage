@@ -1,0 +1,73 @@
+# Project Rules and Standards
+
+## Technology Stack
+language: typescript
+framework: react@18
+styling: scss_modules
+build_tool: webpack@5
+package_manager: npm
+
+## File Structure
+root_dirs:
+  - src/components     # Reusable components
+  - src/pages         # Page components
+  - src/contexts      # React contexts
+  - src/services      # API services
+  - src/types         # TypeScript types
+  - src/scss          # Global styles
+  - src/assets        # Static assets
+  - src/@types        # TypeScript declarations
+
+## Naming Conventions
+files:
+  components: PascalCase.tsx
+  styles: PascalCase.module.scss
+  services: camelCase.service.ts
+  types: camelCase.ts
+  contexts: PascalCaseContext.tsx
+
+## Type Definitions
+namespace_style:
+  - Use namespace for related types
+  - Export interfaces within namespace
+  - Use descriptive interface names
+  - Extend base interfaces when needed
+example:
+  ```typescript
+  export namespace Auth {
+    export interface User { ... }
+    export interface Credentials { ... }
+    export interface Response { ... }
+  }
+  ```
+
+## Component Rules
+component_structure:
+  - One component per file
+  - Co-located styles (.module.scss)
+  - Props interface with component
+  - Default export
+  - Component documentation
+  - Accessibility compliance
+
+## State Management
+state:
+  global: React Context
+  local: useState
+  forms: react-hook-form
+  validation: yup
+
+## Code Style
+style:
+  indent: 2 spaces
+  quotes: double
+  semicolons: required
+  max_line_length: 80
+  trailing_comma: es5
+
+## Build Commands
+scripts:
+  dev: "npm run dev"
+  build: "npm run build"
+  lint: "npm run lint"
+  format: "npm run format" 

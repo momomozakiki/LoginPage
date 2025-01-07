@@ -1,19 +1,15 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { authService } from "../services/authService";
-
-interface User {
-  username: string;
-  email?: string;
-}
+import { authService } from "../services/api/auth.service";
+import { Auth } from '../types/auth';
 
 interface AuthResponse {
-  user: User;
+  user: Auth.User;
   token: string;
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: Auth.User | null;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
@@ -25,7 +21,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Auth.User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();

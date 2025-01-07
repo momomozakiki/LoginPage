@@ -75,6 +75,11 @@ module.exports = (env, argv) => {
             from: "src/assets/public", // Copy static assets
             to: "assets/public", // Output directory for static assets
             noErrorOnMissing: true, // Ignore if folder doesn't exist
+          },
+          {
+            from: "src/public/alternative_signup",
+            to: "assets/public/alternative_signup",
+            noErrorOnMissing: true,
           }
         ],
       }),
@@ -104,8 +109,10 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx", ".json"], // Resolve these file types
       alias: {
-        "@components": path.resolve(__dirname, "src/components"), // Alias for components folder
-        "@pages": path.resolve(__dirname, "src/pages"), // Alias for pages folder
+        "@": path.resolve(__dirname, 'src'),
+        "@components": path.resolve(__dirname, 'src/components'),
+        "@pages": path.resolve(__dirname, 'src/pages'),
+        "@services": path.resolve(__dirname, 'src/services')
       },
     },
     devServer: {
@@ -117,6 +124,7 @@ module.exports = (env, argv) => {
       open: true, // Open the browser automatically
       hot: true, // Enable hot module replacement
       historyApiFallback: true, // Enable client-side routing
+      host: '0.0.0.0', // Allow access from other devices
     },
     optimization: {
       splitChunks: {

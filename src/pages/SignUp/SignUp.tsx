@@ -1,36 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Button, Input, PasswordEye } from "../../components";
+import { Button, PasswordEye, PhoneInput } from "../../components";
 import * as styles from "./SignUp.module.scss";
 import DocumentTitle from "../../components/DocumentTitle/DocumentTitle";
+import { Auth } from "../../types/auth";
 
 interface SignUpForm {
-  username: string;
-  email: string;
+  phoneNumber: string;
+  countryCode: string;
   password: string;
 }
 
-const schema = yup
-  .object({
-    username: yup.string().required("Username is required"),
-    email: yup.string().email("Invalid email").required("Email is required"),
-    password: yup
-      .string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
-  })
-  .required();
+const schema = yup.object({
+  phoneNumber: yup.string().required("Phone number is required"),
+  countryCode: yup.string().required("Country code is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+}).required();
 
 const SignUp: React.FC = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<SignUpForm>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      countryCode: "+60",
+    },
   });
+
+  const [countryCode, setCountryCode] = useState("+60");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const handlePhoneNumberChange = (value: string) => {
+    setPhoneNumber(value);
+    setValue("phoneNumber", value);
+  };
 
   const onSubmit = async (data: SignUpForm) => {
     try {
@@ -57,23 +68,13 @@ const SignUp: React.FC = () => {
               aria-labelledby="signup-title"
             >
               <div className={styles.formGroup}>
-                <Input
-                  {...register("username")}
-                  type="text"
-                  label="Username"
-                  error={errors.username?.message}
-                  id="signup-username"
-                  autoComplete="username"
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <Input
-                  {...register("email")}
-                  type="email"
-                  label="Email"
-                  error={errors.email?.message}
-                  id="signup-email"
-                  autoComplete="email"
+                <PhoneInput
+                  countryCode={countryCode}
+                  phoneNumber={phoneNumber}
+                  onCountryCodeChange={setCountryCode}
+                  onPhoneNumberChange={handlePhoneNumberChange}
+                  error={errors.phoneNumber?.message}
+                  id="signup-phone"
                 />
               </div>
               <div className={styles.formGroup}>

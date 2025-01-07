@@ -1,0 +1,58 @@
+@import "../../scss/variables";
+
+.container {
+  width: 100%;
+  margin-top: auto;
+  padding-top: $spacing-lg;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: $spacing-lg 0;
+  color: #666;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+  }
+
+  span {
+    padding: 0 $spacing-md;
+    font-size: 14px;
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-lg;
+  margin-top: $spacing-lg;
+  margin-bottom: calc($spacing-lg * 3); // Add extra margin to prevent navbar overlap
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+  background: white;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+} 

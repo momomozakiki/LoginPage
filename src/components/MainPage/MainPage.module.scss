@@ -1,0 +1,41 @@
+@import "../../scss/variables";
+
+.mainPage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  width: 100%;
+}
+
+.mainContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  padding-bottom: var(--nav-height);
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+
+  @include tb-up {
+    width: 90%;
+    max-width: $container-tablet;
+    margin: 0 auto;
+  }
+
+  @include pc-up {
+    max-width: $container-desktop;
+  }
+}
+
+.navBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

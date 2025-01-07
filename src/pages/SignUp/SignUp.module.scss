@@ -3,7 +3,9 @@
 // Main container for signup page
 .signupContainer {
   @extend %auth-container;
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  height: var(--content-height);
 }
 
 // Header section containing title
@@ -12,6 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: $spacing-lg;
 }
 
 // Content section containing form
@@ -25,8 +28,8 @@
 .signupForm {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
+  width: 100%;
+  padding: $spacing-lg;
 }
 
 // Individual form group wrapper

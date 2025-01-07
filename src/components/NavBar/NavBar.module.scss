@@ -1,38 +1,37 @@
 @import "../../scss/variables";
 
 .navbar {
-  position: fixed;
-  bottom: $spacing-lg;
-  left: 50%;
-  transform: translateX(-50%);
+  height: var(--nav-bar-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: transparent;
+}
+
+.navbarContent {
+  width: 100%;
+  padding: 0 $spacing-lg;
+  margin: 0 auto;
+  background-color: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+
+  @include tb-up {
+    width: 90%;
+    max-width: $container-tablet;
+    border-radius: 50px;
+  }
+
+  @include pc-up {
+    max-width: $container-desktop;
+  }
+}
+
+.navItems {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-  padding: $spacing-sm $spacing-lg;
-  z-index: 1000;
-  border-radius: 50px;
-  width: 90%;
-  max-width: $container-mobile;
-  transition: all 0.3s ease;
-  margin-bottom: $spacing-lg;
-
-  @include responsive(tablet) {
-    max-width: $container-tablet;
-  }
-
-  @include responsive(desktop) {
-    max-width: $container-desktop;
-  }
-
-  &:not(:has(.label)) {
-    padding: $spacing-sm calc($spacing-lg / 2);
-  }
-
-  &.compact {
-    padding: $spacing-sm calc($spacing-lg / 2);
-  }
 }
 
 .navItem {
@@ -43,8 +42,9 @@
   text-decoration: none;
   color: #666;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: $spacing-sm;
-  min-width: 64px;
+  padding: 4px;
+  min-width: 56px;
+  z-index: 1;
 
   &:hover {
     color: $primary-color;
@@ -56,38 +56,39 @@
     &::before {
       content: "";
       position: absolute;
-      top: -15px;
-      width: 40px;
-      height: 40px;
+      top: -6px;
+      width: 28px;
+      height: 28px;
       background-color: $primary-color;
       border-radius: 50%;
-      z-index: -1;
+      z-index: 0;
     }
 
     .icon {
       color: white;
-      transform: translateY(-20px);
+      transform: translateY(-8px);
     }
 
     .label {
       font-weight: 600;
-      transform: translateY(-8px);
+      transform: translateY(-2px);
     }
   }
 }
 
 .icon {
-  font-size: 24px;
+  font-size: 18px;
   transition: all 0.3s ease;
 }
 
 .label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   transition: all 0.3s ease;
   opacity: 1;
   visibility: visible;
   height: 16px;
+  margin-top: 2px;
 
   &.hidden {
     opacity: 0;

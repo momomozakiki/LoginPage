@@ -2,36 +2,27 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import {
-  Button,
-  Input,
-  PhoneInput,
-  PasswordEye,
-  OtpInput,
-} from "../../components";
+import { Button, PhoneInput, PasswordEye, OtpInput } from "../../components";
 import * as styles from "./ResetPassword.module.scss";
 import DocumentTitle from "../../components/DocumentTitle/DocumentTitle";
+import { Auth } from "../../types/auth";
 
-interface ResetPasswordForm {
-  email: string;
+interface ResetPasswordForm extends Auth.ResetPasswordData {
   countryCode: string;
   phoneNumber: string;
-  otp: string;
   newPassword: string;
+  otp: string;
 }
 
-const schema = yup
-  .object({
-    email: yup.string().email("Invalid email").required("Email is required"),
-    countryCode: yup.string().required("Country code is required"),
-    phoneNumber: yup.string().required("Phone number is required"),
-    otp: yup.string().required("OTP is required"),
-    newPassword: yup
-      .string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
-  })
-  .required();
+const schema = yup.object({
+  countryCode: yup.string().required("Country code is required"),
+  phoneNumber: yup.string().required("Phone number is required"),
+  newPassword: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+  otp: yup.string().required("OTP is required"),
+}).required();
 
 const ResetPassword: React.FC = () => {
   const {
@@ -88,16 +79,6 @@ const ResetPassword: React.FC = () => {
               aria-labelledby="reset-title"
             >
               <div className={styles.formGroup}>
-                <Input
-                  {...register("email")}
-                  type="email"
-                  label="Email"
-                  error={errors.email?.message}
-                  id="reset-email"
-                  autoComplete="email"
-                />
-              </div>
-              <div className={styles.formGroup}>
                 <PhoneInput
                   countryCode={countryCode}
                   phoneNumber={phoneNumber}
@@ -105,6 +86,15 @@ const ResetPassword: React.FC = () => {
                   onPhoneNumberChange={handlePhoneNumberChange}
                   error={errors.phoneNumber?.message}
                   id="reset-phone"
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <PasswordEye
+                  {...register("newPassword")}
+                  label="New Password"
+                  error={errors.newPassword?.message}
+                  id="reset-password"
+                  autoComplete="new-password"
                 />
               </div>
               <div className={styles.formGroup}>
@@ -116,15 +106,6 @@ const ResetPassword: React.FC = () => {
                   onSendOtp={handleSendOTP}
                   otpSent={otpSent}
                   isLoading={isSubmitting}
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <PasswordEye
-                  {...register("newPassword")}
-                  label="New Password"
-                  error={errors.newPassword?.message}
-                  id="reset-password"
-                  autoComplete="new-password"
                 />
               </div>
               <Button

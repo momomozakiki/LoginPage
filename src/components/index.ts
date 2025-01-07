@@ -7,3 +7,5 @@ export { default as RememberMe } from "./RememberMe/RememberMe";
 export { default as OtpInput } from "./OtpInput/OtpInput";
 export { default as LoadingFallback } from "./LoadingFallback/LoadingFallback";
 export { default as SkipLink } from "./SkipLink/SkipLink";
+export { default as AlternativeSignUp } from "./AlternativeSignUp/AlternativeSignUp";
+export { default as MainPage } from "./MainPage/MainPage";

@@ -11,12 +11,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "types": ["node"],
     "typeRoots": ["node_modules/@types"],
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@pages/*": ["src/pages/*"]
+      "@/*": ["*"],
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@services/*": ["services/*"]
     }
   },
   "include": ["src/**/*"],
