@@ -1,6 +1,13 @@
 # Project Title 
 To create a login page template for future use
 
+# Important Note
+```commandline
+make sure the "sass": "^1.77.6", is fixed to this version at this moment,
+because using latest version will cause deprecation @import error, 
+this error will be only fixed until sass fully implement the @use methode.
+```
+
 ## Description 
 I want to create a general login page template with correct programming practice,
 in this project i will use html, scss, npm, Nodejs, git, GitHub to developed and maintain the code,

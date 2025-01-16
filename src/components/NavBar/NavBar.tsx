@@ -40,8 +40,10 @@ const NavBar: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const toggleLabel = (path: NavRoute) => {
-    setHiddenLabel(hiddenLabel === path ? path : path);
-  };
+  if (hiddenLabel !== path) {
+    setHiddenLabel(path);
+  }
+};
 
   const handleKeyDown = (e: React.KeyboardEvent, path: NavRoute) => {
     if (e.key === "Enter" || e.key === " ") {
