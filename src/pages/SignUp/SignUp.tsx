@@ -13,14 +13,16 @@ interface SignUpForm {
   password: string;
 }
 
-const schema = yup.object({
-  phoneNumber: yup.string().required("Phone number is required"),
-  countryCode: yup.string().required("Country code is required"),
-  password: yup
-    .string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
-}).required();
+const schema = yup
+  .object({
+    phoneNumber: yup.string().required("Phone number is required"),
+    countryCode: yup.string().required("Country code is required"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+  })
+  .required();
 
 const SignUp: React.FC = () => {
   const {

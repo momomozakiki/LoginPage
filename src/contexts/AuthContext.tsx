@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../services/api/auth.service";
-import { Auth } from '../types/auth';
+import { Auth } from "../types/auth";
 
 interface AuthResponse {
   user: Auth.User;

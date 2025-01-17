@@ -14,15 +14,17 @@ interface ResetPasswordForm extends Auth.ResetPasswordData {
   otp: string;
 }
 
-const schema = yup.object({
-  countryCode: yup.string().required("Country code is required"),
-  phoneNumber: yup.string().required("Phone number is required"),
-  newPassword: yup
-    .string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
-  otp: yup.string().required("OTP is required"),
-}).required();
+const schema = yup
+  .object({
+    countryCode: yup.string().required("Country code is required"),
+    phoneNumber: yup.string().required("Phone number is required"),
+    newPassword: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+    otp: yup.string().required("OTP is required"),
+  })
+  .required();
 
 const ResetPassword: React.FC = () => {
   const {

@@ -31,7 +31,9 @@
   justify-content: center;
   gap: $spacing-lg;
   margin-top: $spacing-lg;
-  margin-bottom: calc($spacing-lg * 3); // Add extra margin to prevent navbar overlap
+  margin-bottom: calc(
+    $spacing-lg * 3
+  ); // Add extra margin to prevent navbar overlap
 }
 
 .option {
@@ -55,4 +57,4 @@
   width: 24px;
   height: 24px;
   object-fit: contain;
-} 
+}

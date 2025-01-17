@@ -2,9 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Button, Input, PasswordEye, RememberMe, PhoneInput, AlternativeSignUp } from "../../components";
+import {
+  Button,
+  Input,
+  PasswordEye,
+  RememberMe,
+  PhoneInput,
+  AlternativeSignUp,
+} from "../../components";
 import { useAuth } from "../../contexts/AuthContext";
-import logo from "../../assets/images/logo.png";
+import logo from "./assets/images/logo.png";
 import * as styles from "./Login.module.scss";
 import DocumentTitle from "../../components/DocumentTitle/DocumentTitle";
 

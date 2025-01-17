@@ -30,7 +30,7 @@ $spacing-lg: 20px;
 // Common container styles
 .auth-page-container {
   width: 100%;
-  
+
   @include tb-up {
     width: 90%;
     max-width: $container-mobile;
@@ -74,7 +74,8 @@ $spacing-lg: 20px;
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }

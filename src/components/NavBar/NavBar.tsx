@@ -40,10 +40,10 @@ const NavBar: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const toggleLabel = (path: NavRoute) => {
-  if (hiddenLabel !== path) {
-    setHiddenLabel(path);
-  }
-};
+    if (hiddenLabel !== path) {
+      setHiddenLabel(path);
+    }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent, path: NavRoute) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -71,7 +71,9 @@ const NavBar: React.FC = () => {
               <span className={styles.icon} aria-hidden="true">
                 {icon}
               </span>
-              <span className={`${styles.label} ${hiddenLabel === path ? styles.hidden : ""}`}>
+              <span
+                className={`${styles.label} ${hiddenLabel === path ? styles.hidden : ""}`}
+              >
                 {label}
               </span>
             </Link>

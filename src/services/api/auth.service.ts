@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Auth } from '../../types/auth';
+import { Auth } from "../../types/auth";
 
 export class AuthService {
   private static instance: AuthService;
@@ -64,4 +64,4 @@ export class AuthService {
   }
 }
 
-export const authService = AuthService.getInstance(); 
+export const authService = AuthService.getInstance();

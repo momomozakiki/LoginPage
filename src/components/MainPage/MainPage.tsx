@@ -17,4 +17,4 @@ const MainPage: React.FC<MainPageProps> = ({ children }) => {
   );
 };
 
-export default MainPage; 
+export default MainPage;

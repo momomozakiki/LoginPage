@@ -1,32 +1,35 @@
 import React from "react";
 import * as styles from "./AlternativeSignUp.module.scss";
+import tiktokIcon from "./assets/images/tiktok.png"; // Import images directly
+import gmailIcon from "./assets/images/gmail.png";
+import appleIcon from "./assets/images/apple.png";
+import facebookIcon from "./assets/images/facebook.png";
 
 interface AlternativeOption {
   name: string;
-  icon: string;
+  icon: string; // Use the imported image directly
   url: string;
 }
 
 const alternativeOptions: AlternativeOption[] = [
-  
   {
     name: "TikTok",
-    icon: "/assets/public/alternative_signup/tiktok.png",
+    icon: tiktokIcon, // Use the imported image
     url: "https://www.tiktok.com/@your-account",
   },
   {
     name: "Gmail",
-    icon: "/assets/public/alternative_signup/gmail.png",
+    icon: gmailIcon, // Use the imported image
     url: "mailto:your-email@gmail.com",
   },
   {
     name: "Apple",
-    icon: "/assets/public/alternative_signup/apple.png",
+    icon: appleIcon, // Use the imported image
     url: "https://appleid.apple.com/auth/authorize",
   },
   {
     name: "Facebook",
-    icon: "/assets/public/alternative_signup/facebook.png",
+    icon: facebookIcon, // Use the imported image
     url: "https://facebook.com/your-page",
   },
 ];
@@ -48,7 +51,7 @@ const AlternativeSignUp: React.FC = () => {
             aria-label={`Sign up with ${option.name}`}
           >
             <img
-              src={option.icon}
+              src={option.icon} // Use the imported image
               alt={option.name}
               className={styles.icon}
               width={40}
@@ -61,4 +64,4 @@ const AlternativeSignUp: React.FC = () => {
   );
 };
 
-export default AlternativeSignUp; 
+export default AlternativeSignUp;

@@ -14,9 +14,10 @@ module.exports = (env, argv) => {
     mode: isProduction ? "production" : "development", // Set mode to 'production' or 'development'
     entry: "./src/index.tsx", // Entry point for the application
     output: {
-      path: path.resolve(__dirname, "dist"), // Output directory
-      filename: isProduction ? "js/[name].[contenthash:8].js" : "js/[name].js", // Output JS file name with content hash in production
-      clean: true, // Clean the output directory before each build
+      path: path.resolve(__dirname, "dist"),
+      filename: isProduction ? "js/[name].[contenthash:8].js" : "js/[name].js", // Main JS files
+      chunkFilename: "js/[id].[contenthash:8].js", // Dynamic imports
+      clean: true, // Clean the output directory
     },
     devtool: isProduction ? false : "source-map", // Generate source maps in development
     module: {
@@ -46,10 +47,10 @@ module.exports = (env, argv) => {
           ],
         },
         {
-          test: /\.(png|jpe?g|gif|svg)$/i, // Handle image files
+          test: /\.(png|jpe?g|gif|svg|webp)$/i, // Handle image files
           type: "asset/resource", // Emit files as separate assets
           generator: {
-            filename: "assets/images/[name].[contenthash:8][ext]", // Output image file name with content hash
+            filename: "assets/[path][name].[contenthash:8][ext]", // Output image file name with content hash "assets/images/[name].[contenthash:8][ext]"
           },
         },
       ],
@@ -57,7 +58,7 @@ module.exports = (env, argv) => {
     plugins: [
       new MiniCssExtractPlugin({
         ignoreOrder: true,
-        filename: isProduction ? "css/[name].[contenthash].css" : "css/[name].css",
+        filename: isProduction ? "css/[name].[contenthash:8].css" : "css/[name].css", // Group CSS files logically
       }),
       new HtmlWebpackPlugin({
         template: "./src/index.html", // Use this HTML template
@@ -72,15 +73,10 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin({
         patterns: [
           {
-            from: "src/assets/public", // Copy static assets
-            to: "assets/public", // Output directory for static assets
+            from: path.resolve(__dirname, "src/assets"), // Copy static assets, previous -> from: "src/assets/public",
+            to: "assets", // Output directory for static assets
             noErrorOnMissing: true, // Ignore if folder doesn't exist
           },
-          {
-            from: "src/public/alternative_signup",
-            to: "assets/public/alternative_signup",
-            noErrorOnMissing: true,
-          }
         ],
       }),
       new BundleAnalyzerPlugin({
@@ -92,8 +88,7 @@ module.exports = (env, argv) => {
       isProduction &&
         new PurgeCSSPlugin({
           paths: glob.sync(`${path.join(__dirname, "src")}/**/*`, { nodir: true }), // Scan all files in src
-          rejected: true, // isProduction ? false : true Log removed classes during development
-          only: ["css"], // Only apply to CSS files
+          // rejected: true, // Useful for debugging purged CSS classes in production, but not necessary unless you need to debug.
           safelist: {
             standard: [/^btn-/, /^form-/], // Safelist Bootstrap classes (e.g., btn-, form-)
             deep: [/^modal-backdrop$/], // Safelist dynamically added classes
@@ -129,16 +124,15 @@ module.exports = (env, argv) => {
     optimization: {
       splitChunks: {
         chunks: 'all',
-        maxInitialRequests: Infinity, // Remove limit on number of initial chunks
-        minSize: 0, // Allow chunks of any size
+        maxInitialRequests: 10, // Limit initial requests // Remove limit on number of initial chunks "Infinity"
+        minSize: 20000, // 20KB minimum size for chunks
+        maxSize: 50000, // 50KB maximum size for chunks
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/, // Target node_modules packages
             name(module) {
               // Create separate chunks for each vendor package
-              const packageName = module.context.match(
-                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-              )[1];
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
               
               // Clean package name for URL compatibility
               return `vendor.${packageName.replace('@', '')}`;
