@@ -3,169 +3,186 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPl
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const { PurgeCSSPlugin } = require("purgecss-webpack-plugin"); // Plugin to remove unused CSS
-const glob = require("glob"); // Used to match files for PurgeCSS
-const webpack = require('webpack');
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
+const glob = require("glob");
+const webpack = require("webpack");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = (env, argv) => {
-  const isProduction = argv.mode === "production"; // Check if the build mode is production
+  const isProduction = argv.mode === "production";
 
   return {
-    mode: isProduction ? "production" : "development", // Set the mode to 'production' or 'development' based on the build command
-    entry: "./src/index.tsx", // Entry point of the application. Webpack starts bundling from here.
-    output: {                 // Configuration for the output files
-      path: path.resolve(__dirname, "dist"), // Output directory for bundled files
-      filename: isProduction ? "js/[name].[contenthash:8].js" : "js/[name].js", // Main JS files with content hash in production
-      chunkFilename: "js/[id].[contenthash:8].js", // Dynamic imports (e.g., lazy-loaded components)
-      clean: true, // Clean the output directory before each build
+    mode: isProduction ? "production" : "development",
+    entry: "./src/index.tsx",
+    output: {
+      path: path.resolve(__dirname, "dist"),
+      filename: isProduction ? "js/[name].[contenthash:8].js" : "js/[name].js",
+      chunkFilename: "js/[id].[contenthash:8].js",
+      clean: true,
     },
-    devtool: isProduction ? false : "source-map", // Generate source maps in development for easier debugging
-    module: {                                     // Module rules define how different file types are processed
+    devtool: isProduction ? false : "source-map",
+    module: {
       rules: [
         {
-          test: /\.(ts|tsx)$/, // Handle TypeScript and JSX files
-          exclude: /node_modules/, // Exclude node_modules from processing
-          use: "babel-loader", // Use Babel to transpile TypeScript/JSX to JavaScript
+          test: /\.(ts|tsx)$/,
+          exclude: /node_modules/,
+          use: "babel-loader",
         },
         {
-          test: /\.scss$/, // Handle SCSS files
+          test: /\.scss$/,
           use: [
-            MiniCssExtractPlugin.loader, // Extract CSS into separate files
+            MiniCssExtractPlugin.loader,
             {
-              loader: 'css-loader', // Process CSS files
+              loader: "css-loader",
               options: {
                 modules: {
-                  auto: true, // Enable CSS modules for all files matching .module.scss
+                  auto: true,
                   localIdentName: isProduction
-                    ? '[hash:base64]' // Short hash for production
-                    : '[local]--[hash:base64:5]', // Include class name for easier debugging in development
+                    ? "[hash:base64]"
+                    : "[local]--[hash:base64:5]",
                 },
               },
             },
-            'postcss-loader', // Apply PostCSS transformations (e.g., autoprefixer)
-            'sass-loader', // Compile SCSS to CSS
+            "postcss-loader",
+            "sass-loader",
           ],
         },
         {
-          test: /\.(png|jpe?g|gif|svg|webp)$/i, // Handle image files
-          type: "asset/resource", // Emit files as separate assets
+          test: /\.(png|jpe?g|gif|svg|webp)$/i,
+          type: "asset/resource",
           generator: {
-            filename: "assets/[path][name].[contenthash:8].[ext]",  // Output images with content hash and preserve folder structure
+            filename: "assets/[path][name].[contenthash:8][ext]",
           },
         },
       ],
     },
-    plugins: [          // Plugins extend Webpack's functionality
-      new MiniCssExtractPlugin({    // Extract CSS into separate files for better caching and performance
-        ignoreOrder: true, // Ignore CSS order warnings
-        filename: isProduction ? "css/[name].[contenthash:8].css" : "css/[name].css", // Output CSS files with content hash in production
+    plugins: [
+      new MiniCssExtractPlugin({
+        ignoreOrder: true,
+        filename: isProduction ? "css/[name].[contenthash:8].css" : "css/[name].css",
       }),
-      new HtmlWebpackPlugin({       // Generate an HTML file and inject bundled scripts
-        template: "./src/index.html", // Use this HTML template
-        inject: "body", // Inject scripts into the body
-        minify: isProduction && { // Minify HTML in production
-          removeComments: true, // Remove comments
-          collapseWhitespace: true, // Collapse whitespace
-          minifyJS: true, // Minify inline JavaScript
-          minifyCSS: true, // Minify inline CSS
+      new HtmlWebpackPlugin({
+        template: "./src/index.html",
+        inject: "body",
+        minify: isProduction && {
+          removeComments: true,
+          collapseWhitespace: true,
+          minifyJS: true,
+          minifyCSS: true,
         },
       }),
-      new CopyWebpackPlugin({       // Copy static assets (e.g., images, fonts) to the output directory
+      new CopyWebpackPlugin({
         patterns: [
           {
-            from: path.resolve(__dirname, "src/assets/public"), // Source directory for static assets
-            to: "assets/public", // Output directory for static assets
-            noErrorOnMissing: true, // Ignore if the folder doesn't exist
-          },
-          {
-            from: "src/public/alternative_signup", // Additional static assets
-            to: "assets/public/alternative_signup",
+            from: path.resolve(__dirname, "src/assets"),
+            to: "assets",
             noErrorOnMissing: true,
           },
         ],
       }),
-      new BundleAnalyzerPlugin({        // Analyze bundle size in production
-        analyzerMode: isProduction ? "static" : "disabled", // Generate a report in production
-        openAnalyzer: false, // Don't open the report automatically
-      }),
-
-      // Remove unused CSS in production
+      isProduction &&
+        new BundleAnalyzerPlugin({
+          analyzerMode: "static",
+          openAnalyzer: false,
+        }),
       isProduction &&
         new PurgeCSSPlugin({
-          paths: glob.sync(`${path.join(__dirname, "src")}/**/*`, { nodir: true }), // Scan all files in src
+          paths: glob.sync(`${path.join(__dirname, "src")}/**/*`, { nodir: true }),
           safelist: {
-            standard: [/^btn-/, /^form-/], // Safelist Bootstrap classes (e.g., btn-, form-)
-            deep: [/^modal-backdrop$/], // Safelist dynamically added classes
+            standard: [/^btn-/, /^form-/],
+            deep: [/^modal-backdrop$/],
           },
         }),
-
-      // Define environment variables for the application
       new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify(isProduction ? 'production' : 'development'), // Set NODE_ENV
-          REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL || 'http://localhost:3000/api'), // Set API URL
+        "process.env": {
+          NODE_ENV: JSON.stringify(isProduction ? "production" : "development"),
+          REACT_APP_API_URL: JSON.stringify(
+            process.env.REACT_APP_API_URL || "http://localhost:3000/api"
+          ),
         },
       }),
-    ].filter(Boolean), // Remove falsy values (e.g., `false` when not in production)
-
-    // Resolve file extensions and define aliases for easier imports
+      isProduction &&
+        new ImageMinimizerPlugin({
+          minimizer: {
+            implementation: ImageMinimizerPlugin.imageminGenerate,
+            options: {
+              plugins: [
+                ["mozjpeg", { quality: 65 }], // Compress JPEG images
+                ["optipng", { optimizationLevel: 5 }], // Compress PNG images
+                ["pngquant", { quality: [0.65, 0.9] }], // Further compress PNG images
+                ["svgo", { plugins: [{ removeViewBox: false }] }], // Optimize SVG files
+                ["imagemin-webp", { quality: 75 }], // Convert images to WebP
+              ],
+            },
+          },
+          generator: [
+            {
+              preset: "webp",
+              implementation: ImageMinimizerPlugin.imageminGenerate,
+              options: {
+                plugins: ["imagemin-webp"],
+              },
+            },
+          ],
+        }),
+      isProduction &&
+        new CompressionPlugin({
+          test: /\.(js|css|html|svg)$/, // Compress JS, CSS, HTML, SVG
+          threshold: 10240, // Only compress files larger than 10 KB
+          minRatio: 0.8, // Only compress files with compression ratio > 0.8
+        }),
+    ].filter(Boolean),
     resolve: {
-      extensions: [".js", ".jsx", ".ts", ".tsx", ".json"], // Resolve these file types
+      extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
       alias: {
-        "@": path.resolve(__dirname, 'src'), // Alias for the src directory
-        "@components": path.resolve(__dirname, 'src/components'), // Alias for components
-        "@pages": path.resolve(__dirname, 'src/pages'), // Alias for pages
-        "@services": path.resolve(__dirname, 'src/services'), // Alias for services
+        "@": path.resolve(__dirname, "src"),
+        "@components": path.resolve(__dirname, "src/components"),
+        "@pages": path.resolve(__dirname, "src/pages"),
+        "@services": path.resolve(__dirname, "src/services"),
       },
     },
-
-    // Configuration for the development server
     devServer: {
       static: {
-        directory: path.resolve(__dirname, "dist"), // Serve files from the dist directory
+        directory: path.resolve(__dirname, "dist"),
       },
-      compress: true, // Enable gzip compression
-      port: 9000, // Port for the dev server
-      open: true, // Open the browser automatically
-      hot: true, // Enable hot module replacement (HMR)
-      historyApiFallback: true, // Enable client-side routing
-      host: '0.0.0.0', // Allow access from other devices
+      compress: true,
+      port: 9000,
+      open: true,
+      hot: true,
+      historyApiFallback: true,
+      host: "0.0.0.0",
     },
-
-    // Optimization settings for better performance
     optimization: {
       splitChunks: {
-        chunks: 'all', // Split all types of chunks (sync, async, initial)
-        maxInitialRequests: 10, // Limit the number of initial chunks
-        minSize: 20000, // Minimum size for chunks (20KB)
-        maxSize: 50000, // Maximum size for chunks (50KB)
+        chunks: "all",
+        maxInitialRequests: 10,
+        minSize: 20000,
+        maxSize: 50000,
         cacheGroups: {
           vendor: {
-            test: /[\\/]node_modules[\\/]/, // Target node_modules packages
+            test: /[\\/]node_modules[\\/]/,
             name(module) {
-              // Create separate chunks for each vendor package
               const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-              return `vendor.${packageName.replace('@', '')}`; // Clean package name for URL compatibility
+              return `vendor.${packageName.replace("@", "")}`;
             },
           },
           styles: {
-            name: 'styles', // Bundle CSS files separately
+            name: "styles",
             test: /\.css$/,
-            chunks: 'all',
-            enforce: true, // Force CSS into separate chunks
+            chunks: "all",
+            enforce: true,
           },
         },
       },
-      runtimeChunk: 'single', // Extract webpack runtime into a single chunk
-      moduleIds: 'deterministic', // Use deterministic module IDs for better caching
-      chunkIds: 'deterministic', // Use deterministic chunk IDs for better caching
+      runtimeChunk: "single",
+      moduleIds: "deterministic",
+      chunkIds: "deterministic",
     },
-
-    // Performance hints and limits
     performance: {
-      hints: isProduction ? 'warning' : false, // Show size warnings only in production
-      maxEntrypointSize: 512000, // Maximum size for entry points (512KB)
-      maxAssetSize: 512000, // Maximum size for assets (512KB)
+      hints: isProduction ? "warning" : false,
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000,
     },
   };
 };
